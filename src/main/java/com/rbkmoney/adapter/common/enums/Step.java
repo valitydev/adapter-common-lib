@@ -10,6 +10,7 @@ public enum Step {
     REFUND,
     CHECK_STATUS,
     CAPTURE,
+    DO_NOTHING,
 
     RECURRENT,
     AUTH_RECURRENT,
