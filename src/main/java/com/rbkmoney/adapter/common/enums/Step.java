@@ -1,0 +1,24 @@
+package com.rbkmoney.adapter.common.enums;
+
+public enum Step {
+
+    PRE_AUTH,
+    AUTH,
+    FINISH_THREE_DS,
+    AWAIT_CALLBACK,
+    CANCEL,
+    REFUND,
+    CHECK_STATUS,
+    CAPTURE,
+
+    RECURRENT,
+    AUTH_RECURRENT,
+
+    GENERATE_TOKEN_AUTH,
+    GENERATE_TOKEN_FINISH_THREE_DS,
+    GENERATE_TOKEN_CAPTURE,
+    GENERATE_TOKEN_REFUND,
+    GENERATE_TOKEN_CHECK_STATUS,
+    GENERATE_TOKEN_FINISH
+
+}
