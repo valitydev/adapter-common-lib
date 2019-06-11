@@ -3,7 +3,7 @@ package com.rbkmoney.adapter.common.handler.callback;
 import com.rbkmoney.adapter.common.enums.Step;
 import com.rbkmoney.adapter.common.model.AdapterContext;
 import com.rbkmoney.adapter.common.model.Callback;
-import com.rbkmoney.adapter.common.properties.TimerProperties;
+import com.rbkmoney.adapter.common.properties.CommonTimerProperties;
 import com.rbkmoney.adapter.common.serializer.AdapterSerializer;
 import com.rbkmoney.adapter.common.serializer.CallbackSerializer;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenCallbackResult;
@@ -28,7 +28,7 @@ public class RecurrentTokenCallbackHandler implements CallbackHandler<RecurrentT
 
     private final CallbackSerializer callbackSerializer;
 
-    private final TimerProperties timerProperties;
+    private final CommonTimerProperties timerProperties;
 
     @Override
     public RecurrentTokenCallbackResult handleCallback(ByteBuffer callback, RecurrentTokenContext context) {

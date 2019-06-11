@@ -17,7 +17,7 @@ import java.util.function.BiFunction;
 
 @Slf4j
 @RequiredArgsConstructor
-public abstract class AdapterController {
+public class AdapterController {
 
     private final HellgateAdapterClient hgClient;
 

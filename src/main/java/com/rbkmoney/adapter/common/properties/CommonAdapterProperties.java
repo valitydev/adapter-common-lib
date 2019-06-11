@@ -2,26 +2,24 @@ package com.rbkmoney.adapter.common.properties;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
-public abstract class AdapterProperties {
+@Validated
+public class CommonAdapterProperties {
 
     @NotEmpty
     private String url;
 
-    @NotEmpty
     private String callbackUrl;
 
-    @NotEmpty
     private String pathCallbackUrl;
 
-    @NotEmpty
     private String pathRecurrentCallbackUrl;
 
-    @NotEmpty
     private String tagPrefix;
 
 }
