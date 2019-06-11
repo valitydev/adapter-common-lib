@@ -1,6 +1,7 @@
 package com.rbkmoney.adapter.common.utils.converter;
 
 import com.rbkmoney.adapter.common.enums.TargetStatus;
+import com.rbkmoney.adapter.common.exception.UnknownTargetStatusException;
 import com.rbkmoney.damsel.domain.TargetInvoicePaymentStatus;
 import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import com.rbkmoney.damsel.proxy_provider.PaymentInfo;
@@ -57,22 +58,19 @@ public final class PaymentDataConverterUtils {
     }
 
     public static TargetStatus getTargetStatus(TargetInvoicePaymentStatus targetInvoicePaymentStatus) {
-        if (targetInvoicePaymentStatus == null) {
-            throw new IllegalArgumentException("Argument targetInvoicePaymentStatus cannot be empty");
+        if (targetInvoicePaymentStatus != null) {
+            if (targetInvoicePaymentStatus.isSetProcessed()) {
+                return TargetStatus.PROCESSED;
+            } else if (targetInvoicePaymentStatus.isSetCancelled()) {
+                return TargetStatus.CANCELLED;
+            } else if (targetInvoicePaymentStatus.isSetCaptured()) {
+                return TargetStatus.CAPTURED;
+            } else if (targetInvoicePaymentStatus.isSetRefunded()) {
+                return TargetStatus.REFUNDED;
+            }
         }
-        TargetStatus targetStatus;
-        if (targetInvoicePaymentStatus.isSetProcessed()) {
-            targetStatus = TargetStatus.PROCESSED;
-        } else if (targetInvoicePaymentStatus.isSetCancelled()) {
-            targetStatus = TargetStatus.CANCELLED;
-        } else if (targetInvoicePaymentStatus.isSetCaptured()) {
-            targetStatus = TargetStatus.CAPTURED;
-        } else if (targetInvoicePaymentStatus.isSetRefunded()) {
-            targetStatus = TargetStatus.REFUNDED;
-        } else {
-            throw new IllegalStateException("Unknown target status: " + targetInvoicePaymentStatus);
-        }
-        return targetStatus;
+
+        throw new UnknownTargetStatusException();
     }
 
 }

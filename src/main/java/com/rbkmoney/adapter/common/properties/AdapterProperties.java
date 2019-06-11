@@ -21,4 +21,7 @@ public abstract class AdapterProperties {
     @NotEmpty
     private String pathRecurrentCallbackUrl;
 
+    @NotEmpty
+    private String tagPrefix;
+
 }

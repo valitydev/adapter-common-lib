@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.Instant;
+
 @Getter
 @Setter
 @ToString
@@ -19,6 +21,9 @@ public class AdapterContext {
     private String paRes;
     private String acsUrl;
     private String termUrl;
+
+    private Instant maxDateTimePolling;
+    private String trxId;
 
     private Step nextStep;
 
