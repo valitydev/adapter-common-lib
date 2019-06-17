@@ -8,7 +8,7 @@
 
     <groupId>com.rbkmoney</groupId>
     <artifactId>adapter-common-lib</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
 
     <description></description>
 
@@ -72,6 +72,7 @@
             <groupId>com.rbkmoney</groupId>
             <artifactId>damsel</artifactId>
             <version>${damsel.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.rbkmoney</groupId>
@@ -82,11 +83,13 @@
             <groupId>com.rbkmoney.woody</groupId>
             <artifactId>woody-thrift</artifactId>
             <version>${woody.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.rbkmoney.proxy-libs</groupId>
             <artifactId>hellgate-adapter-client</artifactId>
             <version>${hellgate-adapter-client.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.rbkmoney</groupId>
