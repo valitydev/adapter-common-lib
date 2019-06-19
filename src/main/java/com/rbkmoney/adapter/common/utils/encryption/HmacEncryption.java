@@ -25,22 +25,29 @@ public final class HmacEncryption {
         return calculateHMAC(data, key, HMAC_SHA256);
     }
 
-    public static String calculateHMAC(String data, String key, String algorithm) {
-
+    public static String calculateHMAC(String data, String hexEncodedKey, String algorithm) {
         try {
-            byte[] decodedKey = Hex.decodeHex(key.toCharArray());
-            SecretKeySpec keySpec = new SecretKeySpec(decodedKey, algorithm);
-            Mac mac = Mac.getInstance(algorithm);
-            mac.init(keySpec);
-
-            byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);
-            byte[] signatureBytes = mac.doFinal(dataBytes);
-
-            return new String(new Hex().encode(signatureBytes));
+            byte[] decodedKey = Hex.decodeHex(hexEncodedKey.toCharArray());
+            return calculateHMAC(data, decodedKey, algorithm);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
+
+    public static String calculateHMAC(String data, byte[] key, String algorithm) {
+        try {
+            SecretKeySpec keySpec = new SecretKeySpec(key, algorithm);
+            Mac mac = Mac.getInstance(algorithm);
+            mac.init(keySpec);
+            byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);
+            byte[] resultBytes = mac.doFinal(dataBytes);
+            return new String(new Hex().encode(resultBytes));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+
 
     public static String prepareDataForHmac(String[] fields, MultiValueMap<String, String> params) {
         StringBuilder dataHmac = new StringBuilder();
