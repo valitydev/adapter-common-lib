@@ -4,19 +4,16 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.classic.spi.LoggerContextVO;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Marker;
 
 import java.util.Map;
 
+@RequiredArgsConstructor
 public class MaskedEvent implements ILoggingEvent {
 
-    private ILoggingEvent event;
-    private String message;
-
-    MaskedEvent(ILoggingEvent event, String message) {
-        this.event = event;
-        this.message = message;
-    }
+    private final ILoggingEvent event;
+    private final String message;
 
     @Override
     public String getThreadName() {

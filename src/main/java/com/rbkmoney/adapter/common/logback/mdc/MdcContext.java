@@ -10,17 +10,18 @@ import java.util.Map;
 
 public class MdcContext {
 
+    private static String keyAmount = "amount";
     public static void mdcPutContext(RecurrentTokenContext context, String[] fieldsToPutInMdc) {
         TransactionInfo transactionInfo = context.getTokenInfo().getTrx();
         String amount = PaymentDataConverter.getFormattedAmount(context.getTokenInfo().getPaymentTool().getMinimalPaymentCost().getAmount()).toString();
-        MDC.put("amount", amount);
+        MDC.put(keyAmount, amount);
         mdcPutContextTransactionInfo(transactionInfo, fieldsToPutInMdc);
     }
 
     public static void mdcPutContext(PaymentContext context, String[] fieldsToPutInMdc) {
         TransactionInfo transactionInfo = context.getPaymentInfo().getPayment().getTrx();
         String amount = PaymentDataConverter.getFormattedAmount(context.getPaymentInfo().getPayment().getCost().getAmount()).toString();
-        MDC.put("amount", amount);
+        MDC.put(keyAmount, amount);
         mdcPutContextTransactionInfo(transactionInfo, fieldsToPutInMdc);
     }
 
@@ -34,7 +35,7 @@ public class MdcContext {
     }
 
     public static void mdcRemoveContext(String[] fieldsToPutInMdc) {
-        MDC.remove("amount");
+        MDC.remove(keyAmount);
         for (String field : fieldsToPutInMdc) {
             MDC.remove(field);
         }

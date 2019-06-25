@@ -18,10 +18,11 @@ public class PatternMaskingMessageJsonProvider extends AbstractFieldJsonProvider
     private Pattern multilinePattern;
     private List<String> maskPatterns = new ArrayList<>();
     public static final String FIELD_MESSAGE = "message";
+    private final String delimiter = "|";
 
     public void addMaskPattern(String maskPattern) {
         maskPatterns.add(maskPattern);
-        multilinePattern = Pattern.compile(String.join("|", maskPatterns), Pattern.MULTILINE);
+        multilinePattern = Pattern.compile(String.join(delimiter, maskPatterns), Pattern.MULTILINE);
     }
 
     public PatternMaskingMessageJsonProvider() {
@@ -31,7 +32,9 @@ public class PatternMaskingMessageJsonProvider extends AbstractFieldJsonProvider
 
     @Override
     public void writeTo(JsonGenerator generator, ILoggingEvent event) throws IOException {
-        JsonWritingUtils.writeStringField(generator, getFieldName(), MaskingMessageWithPattern.maskMessage(event.getFormattedMessage(), multilinePattern));
+        JsonWritingUtils.writeStringField(generator, getFieldName(),
+                MaskingMessageWithPattern.maskMessage(event.getFormattedMessage(), multilinePattern)
+        );
     }
 
     @Override
