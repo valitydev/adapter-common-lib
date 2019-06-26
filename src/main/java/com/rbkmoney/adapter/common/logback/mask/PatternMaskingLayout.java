@@ -11,11 +11,11 @@ public class PatternMaskingLayout extends PatternLayout {
 
     private Pattern multilinePattern;
     private List<String> maskPatterns = new ArrayList<>();
-    private final String delimiter = "|";
+    private static final String DELIMITER = "|";
 
     public void addMaskPattern(String maskPattern) {
         maskPatterns.add(maskPattern);
-        multilinePattern = Pattern.compile(String.join(delimiter, maskPatterns), Pattern.MULTILINE);
+        multilinePattern = Pattern.compile(String.join(DELIMITER, maskPatterns), Pattern.MULTILINE);
     }
 
     @Override

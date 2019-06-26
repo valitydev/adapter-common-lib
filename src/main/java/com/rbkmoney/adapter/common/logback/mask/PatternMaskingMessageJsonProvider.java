@@ -18,11 +18,11 @@ public class PatternMaskingMessageJsonProvider extends AbstractFieldJsonProvider
     private Pattern multilinePattern;
     private List<String> maskPatterns = new ArrayList<>();
     public static final String FIELD_MESSAGE = "message";
-    private final String delimiter = "|";
+    private static final String DELIMITER = "|";
 
     public void addMaskPattern(String maskPattern) {
         maskPatterns.add(maskPattern);
-        multilinePattern = Pattern.compile(String.join(delimiter, maskPatterns), Pattern.MULTILINE);
+        multilinePattern = Pattern.compile(String.join(DELIMITER, maskPatterns), Pattern.MULTILINE);
     }
 
     public PatternMaskingMessageJsonProvider() {
