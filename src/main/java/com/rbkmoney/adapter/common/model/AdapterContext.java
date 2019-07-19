@@ -25,6 +25,6 @@ public class AdapterContext {
     private Instant maxDateTimePolling;
     private String trxId;
 
-    private Step nextStep;
+    private Step step;
 
 }
