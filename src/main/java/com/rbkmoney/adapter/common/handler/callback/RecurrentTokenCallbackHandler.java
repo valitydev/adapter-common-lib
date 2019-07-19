@@ -33,7 +33,7 @@ public class RecurrentTokenCallbackHandler implements CallbackHandler<RecurrentT
     @Override
     public RecurrentTokenCallbackResult handleCallback(ByteBuffer callback, RecurrentTokenContext context) {
         AdapterContext adapterContext = adapterSerializer.getAdapterContext(context);
-        adapterContext.setNextStep(Step.GENERATE_TOKEN_FINISH_THREE_DS);
+        adapterContext.setStep(Step.GENERATE_TOKEN_FINISH_THREE_DS);
         Callback callbackObj = callbackSerializer.read(callback.array());
         adapterContext.setPaRes(callbackObj.getPaRes());
         adapterContext.setMd(callbackObj.getMd());

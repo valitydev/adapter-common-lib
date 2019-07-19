@@ -31,7 +31,7 @@ public class PaymentCallbackHandler implements CallbackHandler<PaymentCallbackRe
     @Override
     public PaymentCallbackResult handleCallback(ByteBuffer callback, PaymentContext context) {
         AdapterContext adapterContext = adapterSerializer.getAdapterContext(context);
-        adapterContext.setNextStep(Step.FINISH_THREE_DS);
+        adapterContext.setStep(Step.FINISH_THREE_DS);
         Callback callbackObj = callbackSerializer.read(callback.array());
         adapterContext.setPaRes(callbackObj.getPaRes());
         adapterContext.setMd(callbackObj.getMd());
