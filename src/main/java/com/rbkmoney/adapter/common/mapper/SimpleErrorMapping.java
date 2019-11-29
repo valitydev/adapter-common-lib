@@ -14,7 +14,7 @@ public class SimpleErrorMapping {
     private final Resource filePath;
     private final String patternReason;
 
-    public ErrorMapping getErrorMapping() throws IOException {
+    public ErrorMapping createErrorMapping() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 
