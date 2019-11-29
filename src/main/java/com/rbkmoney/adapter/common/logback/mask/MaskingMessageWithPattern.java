@@ -1,9 +1,13 @@
 package com.rbkmoney.adapter.common.logback.mask;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MaskingMessageWithPattern {
 
     public static String maskMessage(String message, Pattern multilinePattern) {

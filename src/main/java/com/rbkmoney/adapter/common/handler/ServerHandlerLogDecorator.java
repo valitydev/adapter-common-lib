@@ -1,5 +1,6 @@
 package com.rbkmoney.adapter.common.handler;
 
+import com.rbkmoney.adapter.common.utils.converter.PaymentResourceTypeResolver;
 import com.rbkmoney.damsel.proxy_provider.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,7 @@ public class ServerHandlerLogDecorator implements ProviderProxySrv.Iface {
     @Override
     public RecurrentTokenCallbackResult handleRecurrentTokenCallback(ByteBuffer byteBuffer,
                                                                      RecurrentTokenContext context) throws TException {
-        String recurrentId = context.getTokenInfo().getPaymentTool().getId();
+        String recurrentId = extractRecurrentId(context);
         log.info("handleRecurrentTokenCallback: start with recurrentId {}", recurrentId);
         RecurrentTokenCallbackResult result = handler.handleRecurrentTokenCallback(byteBuffer, context);
         log.info("handleRecurrentTokenCallback end {} with recurrentId {}", result, recurrentId);
@@ -45,15 +46,16 @@ public class ServerHandlerLogDecorator implements ProviderProxySrv.Iface {
     public PaymentProxyResult processPayment(PaymentContext context) throws TException {
         String invoiceId = extractInvoiceId(context);
         String invoicePaymentStatus = extractTargetInvoicePaymentStatus(context);
-        log.info("Process payment handle {} start with invoiceId {}", invoicePaymentStatus, invoiceId);
+        String paymentResourceType = PaymentResourceTypeResolver.extractPaymentResourceType(context);
+        log.info("Process payment handle paymentResourceType='{}', invoicePaymentStatus='{}' start with invoiceId {}", paymentResourceType, invoicePaymentStatus, invoiceId);
         try {
             PaymentProxyResult proxyResult = handler.processPayment(context);
-            log.info("Process payment handle {} finished with invoiceId {} and proxyResult {}",
-                    invoicePaymentStatus, invoiceId, proxyResult);
+            log.info("Process payment handle paymentResourceType='{}', invoicePaymentStatus='{}' finished with invoiceId {} and proxyResult {}",
+                    paymentResourceType, invoicePaymentStatus, invoiceId, proxyResult);
             return proxyResult;
         } catch (Exception e) {
-            String message = String.format("Failed handle %s process payment for operation with invoiceId %s",
-                    invoicePaymentStatus, invoiceId);
+            String message = String.format("Failed handle paymentResourceType=%s, invoicePaymentStatus=%s process payment for operation with invoiceId %s",
+                    paymentResourceType, invoicePaymentStatus, invoiceId);
             logMessage(e, message);
             throw e;
         }
@@ -62,7 +64,7 @@ public class ServerHandlerLogDecorator implements ProviderProxySrv.Iface {
     @Override
     public PaymentCallbackResult handlePaymentCallback(ByteBuffer byteBuffer,
                                                        PaymentContext context) throws TException {
-        String invoiceId = context.getPaymentInfo().getInvoice().getId();
+        String invoiceId = extractInvoiceId(context);
         log.info("handlePaymentCallback start with invoiceId {}", invoiceId);
         PaymentCallbackResult result = handler.handlePaymentCallback(byteBuffer, context);
         log.info("handlePaymentCallback finish {} with invoiceId {}", result, invoiceId);

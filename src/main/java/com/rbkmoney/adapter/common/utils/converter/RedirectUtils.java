@@ -1,9 +1,10 @@
 package com.rbkmoney.adapter.common.utils.converter;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RedirectUtils {
 
     public static String getCallbackUrl(String callbackUrl, String path) {
@@ -12,4 +13,5 @@ public class RedirectUtils {
                 .build()
                 .toUriString();
     }
+
 }

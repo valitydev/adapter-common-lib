@@ -1,9 +1,5 @@
 package com.rbkmoney.adapter.common.utils.converter;
 
-import com.rbkmoney.adapter.common.enums.TargetStatus;
-import com.rbkmoney.adapter.common.exception.UnknownTargetStatusException;
-import com.rbkmoney.damsel.domain.TargetInvoicePaymentStatus;
-import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import com.rbkmoney.damsel.proxy_provider.PaymentInfo;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -20,7 +16,7 @@ public final class PaymentDataConverter {
         return String.format("%016X", new Random().nextLong()).toUpperCase();
     }
 
-    public static BigDecimal getFormattedAmount(long amount) {
+    public static BigDecimal prepareFormattedAmount(long amount) {
         return new BigDecimal(amount).movePointLeft(2);
     }
 

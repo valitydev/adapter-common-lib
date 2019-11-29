@@ -4,24 +4,13 @@ import com.rbkmoney.woody.api.trace.ContextUtils;
 import com.rbkmoney.woody.api.trace.context.TraceContext;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.metrics.web.client.MetricsRestTemplateCustomizer;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
-import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.nio.charset.Charset;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RestTemplateComponent {
@@ -53,7 +42,7 @@ public class RestTemplateComponent {
     }
 
     public RestTemplateBuilder getRestTemplateBuilder(HttpComponentsClientHttpRequestFactory requestFactory,
-                                                   MetricsRestTemplateCustomizer metricsRestTemplateCustomizer) {
+                                                      MetricsRestTemplateCustomizer metricsRestTemplateCustomizer) {
         return new RestTemplateBuilder()
                 .requestFactory(() -> requestFactory)
                 .additionalCustomizers(metricsRestTemplateCustomizer);

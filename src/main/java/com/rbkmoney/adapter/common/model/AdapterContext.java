@@ -3,15 +3,11 @@ package com.rbkmoney.adapter.common.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.rbkmoney.adapter.common.enums.Step;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.time.Instant;
 
-@Getter
-@Setter
-@ToString
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AdapterContext {

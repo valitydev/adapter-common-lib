@@ -1,7 +1,8 @@
 package com.rbkmoney.adapter.common.controller;
 
 import com.rbkmoney.adapter.common.model.Callback;
-import com.rbkmoney.adapter.common.serializer.CallbackSerializer;
+import com.rbkmoney.adapter.common.state.deserializer.CallbackDeserializer;
+import com.rbkmoney.adapter.common.state.serializer.CallbackSerializer;
 import com.rbkmoney.adapter.helpers.hellgate.HellgateAdapterClient;
 import com.rbkmoney.adapter.helpers.hellgate.exception.HellgateException;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,8 @@ import java.util.function.BiFunction;
 public class AdapterController {
 
     private final HellgateAdapterClient hgClient;
-
     private final CallbackSerializer callbackSerializer;
+    private final CallbackDeserializer callbackDeserializer;
 
     public String receivePaymentIncomingParameters(HttpServletRequest servletRequest,
                                                    HttpServletResponse servletResponse) throws IOException {
@@ -37,7 +38,7 @@ public class AdapterController {
                                    HttpServletResponse servletResponse,
                                    BiFunction<String, ByteBuffer, ByteBuffer> hgFunction) throws IOException {
         String resp = "";
-        Callback callbackObj = callbackSerializer.read(servletRequest);
+        Callback callbackObj = callbackDeserializer.read(servletRequest);
         log.info("ProcessCallback {}", callbackObj);
         try {
             String tag = callbackObj.getMd();

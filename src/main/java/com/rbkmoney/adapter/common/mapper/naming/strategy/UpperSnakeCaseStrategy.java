@@ -44,8 +44,7 @@ public class UpperSnakeCaseStrategy extends PropertyNamingStrategy {
                     }
                     c = Character.toLowerCase(c);
                     wasPrevTranslated = true;
-                }
-                else {
+                } else {
                     wasPrevTranslated = false;
                 }
                 result.append(c);

@@ -1,7 +1,5 @@
 package com.rbkmoney.adapter.common.logback.mask;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.fasterxml.jackson.core.JsonGenerator;
 import net.logstash.logback.composite.AbstractFieldJsonProvider;
@@ -17,7 +15,7 @@ import java.util.regex.Pattern;
 public class PatternMaskingMessageJsonProvider extends AbstractFieldJsonProvider<ILoggingEvent> implements FieldNamesAware<LogstashFieldNames> {
     private Pattern multilinePattern;
     private List<String> maskPatterns = new ArrayList<>();
-    public static final String FIELD_MESSAGE = "message";
+    private static final String FIELD_MESSAGE = "message";
     private static final String DELIMITER = "|";
 
     public void addMaskPattern(String maskPattern) {
@@ -28,7 +26,6 @@ public class PatternMaskingMessageJsonProvider extends AbstractFieldJsonProvider
     public PatternMaskingMessageJsonProvider() {
         setFieldName(FIELD_MESSAGE);
     }
-
 
     @Override
     public void writeTo(JsonGenerator generator, ILoggingEvent event) throws IOException {

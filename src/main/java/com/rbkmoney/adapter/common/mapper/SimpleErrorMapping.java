@@ -12,7 +12,6 @@ import java.io.IOException;
 public class SimpleErrorMapping {
 
     private final Resource filePath;
-
     private final String patternReason;
 
     public ErrorMapping getErrorMapping() throws IOException {
@@ -20,7 +19,7 @@ public class SimpleErrorMapping {
         mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 
         ErrorMapping errorMapping = new ErrorMapping(filePath.getInputStream(), patternReason, mapper);
-        errorMapping.validateMappingFormat();
+        errorMapping.validateMapping();
         return errorMapping;
     }
 

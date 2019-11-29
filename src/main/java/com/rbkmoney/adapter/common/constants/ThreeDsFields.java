@@ -1,14 +1,16 @@
 package com.rbkmoney.adapter.common.constants;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ThreeDsFields {
+@Getter
+@RequiredArgsConstructor
+public enum ThreeDsFields {
 
-    public static final String MD = "MD";
-    public static final String PA_REQ = "PaReq";
-    public static final String PA_RES = "PaRes";
-    public static final String TERM_URL = "TermUrl";
+    MD("MD"),
+    PA_REQ("PaReq"),
+    PA_RES("PaRes"),
+    TERM_URL("TermUrl");
 
+    private final String value;
 }

@@ -1,4 +1,4 @@
-package com.rbkmoney.adapter.common.serializer;
+package com.rbkmoney.adapter.common.state.serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ public abstract class StateSerializer<T> implements Serializer<T> {
         try {
             return mapper.writeValueAsBytes(obj);
         } catch (IOException e) {
-            throw new IllegalArgumentException(e);
+            throw new SerializationException(e);
         }
     }
 
@@ -29,18 +29,8 @@ public abstract class StateSerializer<T> implements Serializer<T> {
         try {
             return Base64.getEncoder().encodeToString(getMapper().writeValueAsBytes(obj));
         } catch (IOException e) {
-            throw new IllegalArgumentException(e);
+            throw new SerializationException(e);
         }
-    }
-
-    @Override
-    public T read(byte[] data) {
-        throw new RuntimeException("Not supported");
-    }
-
-    @Override
-    public T read(String data) {
-        throw new RuntimeException("Not supported");
     }
 
 }

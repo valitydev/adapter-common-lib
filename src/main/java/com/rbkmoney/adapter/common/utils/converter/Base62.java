@@ -1,6 +1,8 @@
 package com.rbkmoney.adapter.common.utils.converter;
 
-/** @see "https://github.com/dukky/Base62/blob/master/base62/src/im/duk/base62/Base62.java" */
+/**
+ * @see "https://github.com/dukky/Base62/blob/master/base62/src/im/duk/base62/Base62.java"
+ */
 public class Base62 {
 
     private String characters;
@@ -15,8 +17,7 @@ public class Base62 {
     /**
      * Constructs a Base62 object with a custom charset.
      *
-     * @param characters
-     *            the charset to use. Must be 62 characters.
+     * @param characters the charset to use. Must be 62 characters.
      * @throws <code>IllegalArgumentException<code> if the supplied charset is not 62 characters long.
      */
     public Base62(String characters) {
@@ -29,8 +30,7 @@ public class Base62 {
     /**
      * Encodes a decimal value to a Base62 <code>String</code>.
      *
-     * @param b10
-     *            the decimal value to encode, must be nonnegative.
+     * @param b10 the decimal value to encode, must be nonnegative.
      * @return the number encoded as a Base62 <code>String</code>.
      */
     public String encodeBase10(Long b10) {
@@ -49,12 +49,10 @@ public class Base62 {
     /**
      * Decodes a Base62 <code>String</code> returning a <code>long</code>.
      *
-     * @param b62
-     *            the Base62 <code>String</code> to decode.
+     * @param b62 the Base62 <code>String</code> to decode.
      * @return the decoded number as a <code>long</code>.
-     * @throws IllegalArgumentException
-     *             if the given <code>String</code> contains characters not
-     *             specified in the constructor.
+     * @throws IllegalArgumentException if the given <code>String</code> contains characters not
+     *                                  specified in the constructor.
      */
     public long decodeBase62(String b62) {
         for (char character : b62.toCharArray()) {

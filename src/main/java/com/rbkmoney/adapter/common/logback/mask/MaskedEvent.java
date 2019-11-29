@@ -87,6 +87,6 @@ public class MaskedEvent implements ILoggingEvent {
 
     @Override
     public void prepareForDeferredProcessing() {
-
+        // Do nothing
     }
 }

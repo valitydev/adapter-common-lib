@@ -3,11 +3,14 @@ package com.rbkmoney.adapter.common.logback.mdc;
 import com.rbkmoney.damsel.domain.TransactionInfo;
 import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenContext;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.slf4j.MDC;
 
 import java.util.Map;
 import java.util.regex.Pattern;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MdcContext {
 
     public static void mdcPutContext(RecurrentTokenContext context, String[] fieldsToPutInMdc) {

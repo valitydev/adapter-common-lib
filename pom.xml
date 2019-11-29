@@ -8,9 +8,10 @@
 
     <groupId>com.rbkmoney</groupId>
     <artifactId>adapter-common-lib</artifactId>
-    <version>0.0.9</version>
+    <version>0.0.10</version>
 
-    <description></description>
+    <name>adapter-common-lib</name>
+    <description>Adapter common libs</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,11 +22,11 @@
         <slf4j.version>1.7.25</slf4j.version>
         <apache.commons.lang3.version>3.9</apache.commons.lang3.version>
         <apache.commons.codec.version>1.12</apache.commons.codec.version>
-        <damsel.version>1.283-27b28aa</damsel.version>
-        <damsel.utils.version>2.1.9</damsel.utils.version>
-        <woody.version>1.1.15</woody.version>
-        <hellgate-adapter-client.version>2.1.9</hellgate-adapter-client.version>
-        <error-mapping-java.version>1.0.2</error-mapping-java.version>
+        <damsel.version>1.363-3074af1</damsel.version>
+        <damsel.utils.version>2.1.10</damsel.utils.version>
+        <woody.version>1.1.16</woody.version>
+        <hellgate-adapter-client.version>2.1.10</hellgate-adapter-client.version>
+        <error-mapping-java.version>1.0.4</error-mapping-java.version>
     </properties>
 
     <dependencies>
@@ -55,6 +56,11 @@
             <version>2.9.8</version>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
             <version>1.2.3</version>
@@ -82,6 +88,16 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>5.1.7.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+            <version>2.1.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator</artifactId>
+            <version>2.1.1.RELEASE</version>
         </dependency>
 
         <!-- RBK.Money -->
@@ -121,12 +137,8 @@
             <version>2.1.5.RELEASE</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
+
+        <!-- Other -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -136,16 +148,6 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
-            <version>2.1.1.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-actuator</artifactId>
-            <version>2.1.1.RELEASE</version>
         </dependency>
     </dependencies>
 

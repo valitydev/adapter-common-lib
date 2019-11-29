@@ -3,14 +3,14 @@ package com.rbkmoney.adapter.common.handler.callback;
 import com.rbkmoney.adapter.common.enums.Step;
 import com.rbkmoney.adapter.common.model.AdapterContext;
 import com.rbkmoney.adapter.common.model.Callback;
-import com.rbkmoney.adapter.common.properties.CommonTimerProperties;
-import com.rbkmoney.adapter.common.serializer.AdapterSerializer;
-import com.rbkmoney.adapter.common.serializer.CallbackSerializer;
+import com.rbkmoney.adapter.common.state.deserializer.AdapterDeserializer;
+import com.rbkmoney.adapter.common.state.deserializer.CallbackDeserializer;
+import com.rbkmoney.adapter.common.state.serializer.AdapterSerializer;
+import com.rbkmoney.adapter.common.state.utils.AdapterStateUtils;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenCallbackResult;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenContext;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenIntent;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenProxyResult;
-import com.rbkmoney.java.damsel.utils.extractors.OptionsExtractors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,27 +24,23 @@ import static com.rbkmoney.java.damsel.utils.creators.ProxyProviderPackageCreato
 @RequiredArgsConstructor
 public class RecurrentTokenCallbackHandler implements CallbackHandler<RecurrentTokenCallbackResult, RecurrentTokenContext> {
 
+    private final AdapterDeserializer adapterDeserializer;
     private final AdapterSerializer adapterSerializer;
-
-    private final CallbackSerializer callbackSerializer;
-
-    private final CommonTimerProperties timerProperties;
+    private final CallbackDeserializer callbackDeserializer;
 
     @Override
     public RecurrentTokenCallbackResult handleCallback(ByteBuffer callback, RecurrentTokenContext context) {
-        AdapterContext adapterContext = adapterSerializer.getAdapterContext(context);
+        AdapterContext adapterContext = AdapterStateUtils.getAdapterContext(context, adapterDeserializer);
         adapterContext.setStep(Step.GENERATE_TOKEN_FINISH_THREE_DS);
-        Callback callbackObj = callbackSerializer.read(callback.array());
+        Callback callbackObj = callbackDeserializer.read(callback.array());
         adapterContext.setPaRes(callbackObj.getPaRes());
         adapterContext.setMd(callbackObj.getMd());
 
-        int timerPollingDelay =
-                OptionsExtractors.extractPollingDelay(context.getOptions(), timerProperties.getPollingDelay());
         byte[] callbackResponse = new byte[0];
         return createRecurrentTokenCallbackResult(
                 callbackResponse,
                 new RecurrentTokenProxyResult()
-                        .setIntent(RecurrentTokenIntent.sleep(createSleepIntent(createTimerTimeout(timerPollingDelay))))
+                        .setIntent(RecurrentTokenIntent.sleep(createSleepIntent(createTimerTimeout(0))))
                         .setNextState(adapterSerializer.writeByte(adapterContext))
         );
     }

@@ -1,7 +1,10 @@
-package com.rbkmoney.adapter.common.serializer;
+package com.rbkmoney.adapter.common.state.deserializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rbkmoney.adapter.common.model.Callback;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -10,11 +13,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class CallbackSerializer extends StateSerializer<Callback> {
+@Getter
+@Setter
+@AllArgsConstructor
+public class CallbackDeserializer implements Deserializer<Callback> {
 
-    public CallbackSerializer(ObjectMapper mapper) {
-        super(mapper);
-    }
+    private final ObjectMapper mapper;
 
     @Override
     public Callback read(byte[] data) {
@@ -28,6 +32,11 @@ public class CallbackSerializer extends StateSerializer<Callback> {
         }
     }
 
+    @Override
+    public Callback read(String data) {
+        throw new DeserializationException("Deserialization not supported");
+    }
+
     public Callback read(HttpServletRequest request) {
         Map<String, String> stringMap = Optional.ofNullable(request.getParameterMap())
                 .orElseGet(HashMap::new)
@@ -36,5 +45,4 @@ public class CallbackSerializer extends StateSerializer<Callback> {
                         v -> v.getValue()[0]));
         return mapper.convertValue(stringMap, Callback.class);
     }
-
 }
