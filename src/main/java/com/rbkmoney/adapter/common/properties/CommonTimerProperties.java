@@ -20,4 +20,16 @@ public class CommonTimerProperties {
     @NotNull
     private int pollingDelay;
 
+    @NotNull
+    private int exponential;
+
+    @NotNull
+    private int defaultInitialExponential;
+
+    @NotNull
+    private int maxTimeBackOff;
+
+    @NotNull
+    private int maxTimeCoefficient;
+
 }

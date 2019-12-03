@@ -8,7 +8,7 @@
 
     <groupId>com.rbkmoney</groupId>
     <artifactId>adapter-common-lib</artifactId>
-    <version>0.0.11</version>
+    <version>0.0.12</version>
 
     <name>adapter-common-lib</name>
     <description>Adapter common libs</description>
