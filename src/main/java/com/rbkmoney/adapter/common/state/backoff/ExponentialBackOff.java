@@ -1,23 +1,19 @@
 package com.rbkmoney.adapter.common.state.backoff;
 
-import com.rbkmoney.adapter.common.model.AdapterContext;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.Instant;
-import java.util.Map;
 
 @Data
 @NoArgsConstructor
 public class ExponentialBackOff implements BackOff {
 
-    public static final int DEFAULT_MILLS = 1000;
+    public static final int DEFAULT_MILLIS = 1000;
 
     public static final Integer DEFAULT_EXPONENTIAL = 2;
     public static final Integer DEFAULT_INITIAL_EXPONENTIAL = 2;
     public static final Integer DEFAULT_MAX_TIME_BACK_OFF = 300;
 
-    private int mills = DEFAULT_MILLS;
+    private int millis = DEFAULT_MILLIS;
     private Integer exponential = DEFAULT_EXPONENTIAL;
     private Integer defaultInitialExponential = DEFAULT_INITIAL_EXPONENTIAL;
     private Integer maxTimeBackOff = DEFAULT_MAX_TIME_BACK_OFF;
@@ -25,26 +21,17 @@ public class ExponentialBackOff implements BackOff {
     private Long startTime;
     private Long currentTime;
 
-    public ExponentialBackOff(Long startTime, Long currentTime, Integer exponential,
-                              Integer defaultInitialExponential, Integer maxTimeBackOff) {
+    public ExponentialBackOff(
+            Long startTime,
+            Long currentTime,
+            Integer exponential,
+            Integer defaultInitialExponential,
+            Integer maxTimeBackOff) {
         this.startTime = startTime;
         this.currentTime = currentTime;
         this.exponential = exponential;
         this.defaultInitialExponential = defaultInitialExponential;
         this.maxTimeBackOff = maxTimeBackOff;
-    }
-
-    public ExponentialBackOff(AdapterContext adapterContext, Map<String, String> options) {
-        final Long currentLocalTime = Instant.now().toEpochMilli();
-        if (adapterContext.getStartDateTimePolling() != null) {
-            this.startTime = adapterContext.getStartDateTimePolling().toEpochMilli();
-        } else {
-            this.startTime = currentLocalTime;
-        }
-        this.currentTime = currentLocalTime;
-        this.exponential = TimeOptionsExtractors.extractExponent(options, DEFAULT_EXPONENTIAL);
-        this.defaultInitialExponential = TimeOptionsExtractors.extractDefaultInitialExponential(options, DEFAULT_INITIAL_EXPONENTIAL);
-        this.maxTimeBackOff = TimeOptionsExtractors.extractMaxTimeBackOff(options, DEFAULT_MAX_TIME_BACK_OFF);
     }
 
     @Override
@@ -59,15 +46,20 @@ public class ExponentialBackOff implements BackOff {
                 return Long.valueOf(ExponentialBackOff.this.defaultInitialExponential);
             }
 
-            long nextBackOff = computeNextInterval(ExponentialBackOff.this.exponential, ExponentialBackOff.this.startTime, ExponentialBackOff.this.currentTime);
+            long nextBackOff = computeNextInterval(
+                    ExponentialBackOff.this.exponential,
+                    ExponentialBackOff.this.startTime,
+                    ExponentialBackOff.this.currentTime);
+
             if (nextBackOff > ExponentialBackOff.this.maxTimeBackOff) {
                 nextBackOff = (long) ExponentialBackOff.this.maxTimeBackOff;
             }
+
             return nextBackOff;
         }
 
         private long computeNextInterval(int exponent, Long startTime, Long currentTime) {
-            return ((currentTime - startTime) / exponent / ExponentialBackOff.this.mills) * exponent + exponent;
+            return ((currentTime - startTime) / exponent / ExponentialBackOff.this.millis) * exponent + exponent;
         }
     }
 
