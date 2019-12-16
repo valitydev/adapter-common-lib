@@ -7,16 +7,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ExponentialBackOff implements BackOff {
 
-    public static final int DEFAULT_MILLIS = 1000;
+    public static final Integer DEFAULT_MUTIPLIER = 2;
+    public static final Integer DEFAULT_INITIAL_INTERVAL = 2;
+    public static final Integer DEFAULT_MAX_INTERVAL = 300;
 
-    public static final Integer DEFAULT_EXPONENTIAL = 2;
-    public static final Integer DEFAULT_INITIAL_EXPONENTIAL = 2;
-    public static final Integer DEFAULT_MAX_TIME_BACK_OFF = 300;
-
-    private int millis = DEFAULT_MILLIS;
-    private Integer exponential = DEFAULT_EXPONENTIAL;
-    private Integer defaultInitialExponential = DEFAULT_INITIAL_EXPONENTIAL;
-    private Integer maxTimeBackOff = DEFAULT_MAX_TIME_BACK_OFF;
+    private Integer multiplier = DEFAULT_MUTIPLIER;
+    private Integer initialInterval = DEFAULT_INITIAL_INTERVAL;
+    private Integer maxInterval = DEFAULT_MAX_INTERVAL;
 
     private Long startTime;
     private Long currentTime;
@@ -24,14 +21,14 @@ public class ExponentialBackOff implements BackOff {
     public ExponentialBackOff(
             Long startTime,
             Long currentTime,
-            Integer exponential,
-            Integer defaultInitialExponential,
-            Integer maxTimeBackOff) {
+            Integer multiplier,
+            Integer initialInterval,
+            Integer maxInterval) {
         this.startTime = startTime;
         this.currentTime = currentTime;
-        this.exponential = exponential;
-        this.defaultInitialExponential = defaultInitialExponential;
-        this.maxTimeBackOff = maxTimeBackOff;
+        this.multiplier = multiplier;
+        this.initialInterval = initialInterval;
+        this.maxInterval = maxInterval;
     }
 
     @Override
@@ -43,23 +40,23 @@ public class ExponentialBackOff implements BackOff {
         @Override
         public Long nextBackOff() {
             if (ExponentialBackOff.this.currentTime.equals(ExponentialBackOff.this.startTime)) {
-                return Long.valueOf(ExponentialBackOff.this.defaultInitialExponential);
+                return Long.valueOf(ExponentialBackOff.this.initialInterval);
             }
 
             long nextBackOff = computeNextInterval(
-                    ExponentialBackOff.this.exponential,
+                    ExponentialBackOff.this.multiplier,
                     ExponentialBackOff.this.startTime,
                     ExponentialBackOff.this.currentTime);
 
-            if (nextBackOff > ExponentialBackOff.this.maxTimeBackOff) {
-                nextBackOff = (long) ExponentialBackOff.this.maxTimeBackOff;
+            if (nextBackOff > ExponentialBackOff.this.maxInterval) {
+                nextBackOff = (long) ExponentialBackOff.this.maxInterval;
             }
 
             return nextBackOff;
         }
 
-        private long computeNextInterval(int exponent, Long startTime, Long currentTime) {
-            return ((currentTime - startTime) / exponent / ExponentialBackOff.this.millis) * exponent + exponent;
+        private long computeNextInterval(int multiplier, Long startTime, Long currentTime) {
+            return ((currentTime - startTime) / multiplier / 1000) * multiplier + multiplier;
         }
     }
 
