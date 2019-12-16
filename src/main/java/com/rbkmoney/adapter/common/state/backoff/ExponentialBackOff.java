@@ -57,17 +57,16 @@ public class ExponentialBackOff implements BackOff {
 
         private long computeNextInterval(int multiplier, Long startTime, Long currentTime) {
             long diff = (currentTime - startTime) / 1000;
-            if (diff < 1) {
+            if (diff < 1 || multiplier == 1) {
                 return initialInterval;
             }
-            int result = initialInterval;
+            long result = initialInterval;
             int step = 0;
             while (diff >= result) {
-                Long pow = (long) Math.pow(multiplier, step);
-                result += (initialInterval * pow);
+                long pow = (long) Math.pow(multiplier, step++);
+                result =  initialInterval * pow;
             }
             return result;
         }
     }
-
 }
