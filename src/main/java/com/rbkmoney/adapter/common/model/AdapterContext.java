@@ -2,6 +2,7 @@ package com.rbkmoney.adapter.common.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.rbkmoney.adapter.common.enums.Step;
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class AdapterContext {
 
     private Step step;
 
+    @JsonUnwrapped
     private PollingInfo pollingInfo;
 
 }
