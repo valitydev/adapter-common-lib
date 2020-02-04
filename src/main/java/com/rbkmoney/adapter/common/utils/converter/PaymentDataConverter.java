@@ -29,7 +29,7 @@ public final class PaymentDataConverter {
     }
 
     public static String prepareOrder(String invoiceId, String paymentId) {
-        return Long.toString(new Base62().decodeBase62(invoiceId) ^ Integer.parseInt(paymentId));
+        return Long.toString(Math.abs(new Base62().decodeBase62(invoiceId) ^ Integer.parseInt(paymentId)));
     }
 
     public static String extractEmail(PaymentInfo paymentInfo) {
