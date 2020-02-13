@@ -17,6 +17,7 @@ public class AdapterContext {
     private String paRes;
     private String acsUrl;
     private String termUrl;
+    private String terminationUri;
 
     private String trxId;
 
