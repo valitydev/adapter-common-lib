@@ -1,6 +1,6 @@
 package com.rbkmoney.adapter.common.utils.converter;
 
-import com.rbkmoney.damsel.cds.SessionData;
+import com.rbkmoney.cds.storage.SessionData;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

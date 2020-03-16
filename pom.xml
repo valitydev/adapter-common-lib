@@ -8,7 +8,7 @@
 
     <groupId>com.rbkmoney</groupId>
     <artifactId>adapter-common-lib</artifactId>
-    <version>0.0.18</version>
+    <version>0.0.19</version>
 
     <name>adapter-common-lib</name>
     <description>Adapter common libs</description>
@@ -23,7 +23,8 @@
         <apache.commons.lang3.version>3.9</apache.commons.lang3.version>
         <apache.commons.codec.version>1.12</apache.commons.codec.version>
         <damsel.version>1.363-3074af1</damsel.version>
-        <damsel.utils.version>2.1.10</damsel.utils.version>
+        <cds-proto.version>1.56-f6ac992</cds-proto.version>
+        <adapter-thrift-lib.version>1.0.1</adapter-thrift-lib.version>
         <woody.version>1.1.16</woody.version>
         <hellgate-adapter-client.version>2.1.10</hellgate-adapter-client.version>
         <error-mapping-java.version>1.0.4</error-mapping-java.version>
@@ -108,9 +109,20 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>com.rbkmoney.adapter-thrift-lib</groupId>
             <artifactId>damsel-utils</artifactId>
-            <version>${damsel.utils.version}</version>
+            <version>${adapter-thrift-lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rbkmoney</groupId>
+            <artifactId>cds-proto</artifactId>
+            <version>${cds-proto.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.rbkmoney.adapter-thrift-lib</groupId>
+            <artifactId>cds-utils</artifactId>
+            <version>${adapter-thrift-lib.version}</version>
         </dependency>
         <dependency>
             <groupId>com.rbkmoney.woody</groupId>

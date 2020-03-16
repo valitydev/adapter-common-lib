@@ -1,13 +1,12 @@
 package com.rbkmoney.adapter.common.state.backoff;
 
-import com.rbkmoney.java.damsel.utils.extractors.OptionsExtractors;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class TimeOptionsExtractors extends OptionsExtractors {
+public class TimeOptionsExtractors {
 
     public static final String TIMER_EXPONENTIAL = "exponential";
     public static final String MAX_TIME_BACKOFF = "max_time_backoff";
