@@ -6,24 +6,22 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.rbkmoney.adapter.common.enums.Step;
 import lombok.Data;
 
+import java.util.Map;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AdapterContext {
-
     private String md;
     private String paReq;
     private String paRes;
     private String acsUrl;
     private String termUrl;
     private String terminationUri;
-
     private String trxId;
-
     private Step step;
+    private Map<String, String> options;
 
     @JsonUnwrapped
     private PollingInfo pollingInfo;
-
 }
