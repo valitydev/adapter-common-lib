@@ -3,8 +3,6 @@ package com.rbkmoney.adapter.common.utils.converter;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class PaymentDataConverterTest {
 
     @Test

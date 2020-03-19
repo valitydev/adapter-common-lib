@@ -8,7 +8,7 @@
 
     <groupId>com.rbkmoney</groupId>
     <artifactId>adapter-common-lib</artifactId>
-    <version>0.0.20</version>
+    <version>0.0.21</version>
 
     <name>adapter-common-lib</name>
     <description>Adapter common libs</description>
@@ -24,7 +24,7 @@
         <apache.commons.codec.version>1.12</apache.commons.codec.version>
         <damsel.version>1.363-3074af1</damsel.version>
         <cds-proto.version>1.56-f6ac992</cds-proto.version>
-        <adapter-thrift-lib.version>1.0.1</adapter-thrift-lib.version>
+        <adapter-thrift-lib.version>1.0.2</adapter-thrift-lib.version>
         <woody.version>1.1.16</woody.version>
         <hellgate-adapter-client.version>2.1.10</hellgate-adapter-client.version>
         <error-mapping-java.version>1.0.4</error-mapping-java.version>
