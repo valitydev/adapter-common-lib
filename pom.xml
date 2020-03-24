@@ -8,7 +8,7 @@
 
     <groupId>com.rbkmoney</groupId>
     <artifactId>adapter-common-lib</artifactId>
-    <version>0.0.22</version>
+    <version>0.0.23</version>
 
     <name>adapter-common-lib</name>
     <description>Adapter common libs</description>
@@ -22,11 +22,11 @@
         <slf4j.version>1.7.25</slf4j.version>
         <apache.commons.lang3.version>3.9</apache.commons.lang3.version>
         <apache.commons.codec.version>1.12</apache.commons.codec.version>
-        <damsel.version>1.363-3074af1</damsel.version>
-        <cds-proto.version>1.56-f6ac992</cds-proto.version>
-        <adapter-thrift-lib.version>1.0.2</adapter-thrift-lib.version>
+        <damsel.version>1.391-8fe5f98</damsel.version>
         <woody.version>1.1.16</woody.version>
-        <hellgate-adapter-client.version>2.1.10</hellgate-adapter-client.version>
+        <cds-proto.version>1.57-b58a3fd</cds-proto.version>
+        <adapter-thrift-lib.version>1.0.2</adapter-thrift-lib.version>
+        <adapter-client-lib.version>2.1.22</adapter-client-lib.version>
         <error-mapping-java.version>1.0.4</error-mapping-java.version>
     </properties>
 
@@ -131,9 +131,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney.proxy-libs</groupId>
+            <groupId>com.rbkmoney.adapter-client-lib</groupId>
             <artifactId>hellgate-adapter-client</artifactId>
-            <version>${hellgate-adapter-client.version}</version>
+            <version>${adapter-client-lib.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
