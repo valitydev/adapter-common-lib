@@ -8,10 +8,24 @@
 
     <groupId>com.rbkmoney</groupId>
     <artifactId>adapter-common-lib</artifactId>
-    <version>0.0.23</version>
+    <version>0.0.24</version>
 
     <name>adapter-common-lib</name>
     <description>Adapter common libs</description>
+    <url>https://github.com/rbkmoney/adapter-common-lib.git</url>
+
+    <developers>
+        <developer>
+            <organization>RBK.money</organization>
+            <organizationUrl>https://rbk.money</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/rbkmoney/adapter-common-lib.git</connection>
+        <developerConnection>scm:git:ssh://github.com/rbkmoney/adapter-common-lib.git</developerConnection>
+        <url>https://github.com/rbkmoney/adapter-common-lib/tree/master</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,15 +33,16 @@
         <dockerfile.base.service.tag>bc95d0d6dc13c693acd2b274531a7d604b877bf3</dockerfile.base.service.tag>
         <dockerfile.registry>${env.REGISTRY}</dockerfile.registry>
         <shared.resources.version>0.3.6</shared.resources.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <jackson.version>2.11.2</jackson.version>
         <apache.commons.lang3.version>3.9</apache.commons.lang3.version>
         <apache.commons.codec.version>1.12</apache.commons.codec.version>
-        <damsel.version>1.391-8fe5f98</damsel.version>
-        <woody.version>1.1.16</woody.version>
-        <cds-proto.version>1.57-b58a3fd</cds-proto.version>
-        <adapter-thrift-lib.version>1.0.2</adapter-thrift-lib.version>
-        <adapter-client-lib.version>2.1.22</adapter-client-lib.version>
-        <error-mapping-java.version>1.0.4</error-mapping-java.version>
+        <damsel.version>1.439-b18f037</damsel.version>
+        <woody.version>[1.1.21,)</woody.version>
+        <cds-proto.version>1.62-07f2b0f</cds-proto.version>
+        <adapter-thrift-lib.version>1.0.5</adapter-thrift-lib.version>
+        <adapter-client-lib.version>2.1.27</adapter-client-lib.version>
+        <error-mapping-java.version>1.0.6</error-mapping-java.version>
+        <slf4j.version>1.7.30</slf4j.version>
     </properties>
 
     <dependencies>
@@ -52,14 +67,9 @@
             <version>1.18.4</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.8</version>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.9.7</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -83,22 +93,22 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>5.1.7.RELEASE</version>
+            <version>5.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.1.7.RELEASE</version>
+            <version>5.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
-            <version>2.1.1.RELEASE</version>
+            <version>2.3.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-actuator</artifactId>
-            <version>2.1.1.RELEASE</version>
+            <version>2.3.2.RELEASE</version>
         </dependency>
 
         <!-- RBK.Money -->
@@ -140,13 +150,23 @@
             <groupId>com.rbkmoney</groupId>
             <artifactId>error-mapping-java</artifactId>
             <version>${error-mapping-java.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>2.1.5.RELEASE</version>
+            <version>2.3.2.RELEASE</version>
             <scope>test</scope>
         </dependency>
 

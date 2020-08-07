@@ -1,7 +1,7 @@
 package com.rbkmoney.adapter.common.utils.converter;
 
-import com.rbkmoney.damsel.cds.CardData;
-import com.rbkmoney.damsel.cds.ExpDate;
+import com.rbkmoney.cds.storage.CardData;
+import com.rbkmoney.cds.storage.ExpDate;
 import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.BankCardExpDate;
 import com.rbkmoney.java.cds.utils.model.CardDataProxyModel;

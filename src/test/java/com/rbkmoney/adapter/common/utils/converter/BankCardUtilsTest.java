@@ -1,7 +1,7 @@
 package com.rbkmoney.adapter.common.utils.converter;
 
-import com.rbkmoney.damsel.cds.CardData;
-import com.rbkmoney.damsel.cds.ExpDate;
+import com.rbkmoney.cds.storage.CardData;
+import com.rbkmoney.cds.storage.ExpDate;
 import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.BankCardExpDate;
 import com.rbkmoney.java.cds.utils.model.CardDataProxyModel;
@@ -16,7 +16,7 @@ public class BankCardUtilsTest {
     private static final byte TEST_MONTH = 3;
     private static final byte TEST_NEW_MONTH = 6;
     private static final ExpDate TEST_EXP_DATE = new ExpDate(TEST_MONTH, TEST_YEAR);
-    private static final CardData TEST_CARD_DATA = new CardData("pan", new ExpDate(TEST_NEW_MONTH, TEST_YEAR));
+    private static final CardData TEST_CARD_DATA = new CardData("pan").setExpDate(new ExpDate(TEST_NEW_MONTH, TEST_YEAR));
     private static final BankCardExpDate TEST_BANK_CARD_EXP_DATE = new BankCardExpDate(TEST_MONTH, TEST_YEAR);
     private static final BankCard TEST_BANK_CARD = new BankCard().setExpDate(TEST_BANK_CARD_EXP_DATE);
     private static final CardDataProxyModel TEST_CARD_DATA_PROXY_MODEL = CardDataProxyModel.builder()
@@ -31,9 +31,9 @@ public class BankCardUtilsTest {
         assertEquals("20200331", getFullCardExpDate(TEST_BANK_CARD_EXP_DATE));
         assertEquals("20200331", getFullCardExpDate(TEST_CARD_DATA_PROXY_MODEL));
 
-        assertEquals(new Integer(31), getDayOfMonth(TEST_BANK_CARD_EXP_DATE));
-        assertEquals(new Integer(31), getDayOfMonth(TEST_CARD_DATA_PROXY_MODEL));
-        assertEquals(new Integer(30), getDayOfMonth(TEST_CARD_DATA));
+        assertEquals(Integer.valueOf(31), getDayOfMonth(TEST_BANK_CARD_EXP_DATE));
+        assertEquals(Integer.valueOf(31), getDayOfMonth(TEST_CARD_DATA_PROXY_MODEL));
+        assertEquals(Integer.valueOf(30), getDayOfMonth(TEST_CARD_DATA));
 
         assertEquals("20", BankCardUtils.getYearFromExpDate(TEST_BANK_CARD_EXP_DATE));
         assertEquals("20", BankCardUtils.getYearFromExpDate(TEST_CARD_DATA_PROXY_MODEL));
