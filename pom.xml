@@ -8,7 +8,7 @@
 
     <groupId>com.rbkmoney</groupId>
     <artifactId>adapter-common-lib</artifactId>
-    <version>0.0.24</version>
+    <version>0.0.25</version>
 
     <name>adapter-common-lib</name>
     <description>Adapter common libs</description>
@@ -182,24 +182,6 @@
             <version>2.0.1.Final</version>
         </dependency>
     </dependencies>
-
-    <distributionManagement>
-        <downloadUrl>http://java-nexus.msk1.rbkmoney.net:8081/nexus/content/groups/public</downloadUrl>
-        <repository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>releases</id>
-            <name>RBKmoney releases repository</name>
-            <url>http://java-nexus.msk1.rbkmoney.net:8081/nexus/content/repositories/releases</url>
-            <layout>default</layout>
-        </repository>
-        <snapshotRepository>
-            <uniqueVersion>true</uniqueVersion>
-            <id>snapshots</id>
-            <name>RBKmoney snapshots repository</name>
-            <url>http://java-nexus.msk1.rbkmoney.net:8081/nexus/content/repositories/snapshots</url>
-            <layout>default</layout>
-        </snapshotRepository>
-    </distributionManagement>
 
     <build>
         <plugins>
