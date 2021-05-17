@@ -13,7 +13,7 @@
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>0.0.28</version>
+    <version>0.0.29</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
