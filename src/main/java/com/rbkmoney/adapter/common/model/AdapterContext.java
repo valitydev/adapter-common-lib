@@ -18,6 +18,9 @@ public class AdapterContext {
     private String acsUrl;
     private String termUrl;
     private String terminationUri;
+    private String cReq;
+    private String threeDsMethodData;
+    private String threeDsSessionData;
     private String trxId;
     private Step step;
     private Map<String, String> options;
