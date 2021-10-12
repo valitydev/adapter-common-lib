@@ -12,6 +12,8 @@ public enum Step {
     CANCEL,
     REFUND,
     CHECK_STATUS,
+    CHECK_CAPTURE_STATUS,
+    CHECK_REFUND_STATUS,
     CAPTURE,
     DO_NOTHING,
 
