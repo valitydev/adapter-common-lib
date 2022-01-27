@@ -4,17 +4,16 @@
 
 - [Структура проекта](#Структура-проекта)
 - [Конфигурация](#configuration)
-  - [AppConfiguration](#appconfiguration)
-  - [HandlerConfiguration](#handlerconfiguration)
-  - [ProcessorConfiguration](#processorconfiguration)
+    - [AppConfiguration](#appconfiguration)
+    - [HandlerConfiguration](#handlerconfiguration)
+    - [ProcessorConfiguration](#processorconfiguration)
 - [Конвертеры](#converter)
-  - [entry](#entry)
-  - [exit](#exit)
-  - [request](#request)
+    - [entry](#entry)
+    - [exit](#exit)
+    - [request](#request)
 - [flow](#flow)
 - [handler](#handler)
 - [processor](#processor)
-
 
 ### Структура проекта
 
@@ -22,8 +21,8 @@
 ├── src
 │   ├── main
 │   │   ├── java
-│   │   │   └── com
-│   │   │       └── rbkmoney
+│   │   │   └── dev
+│   │   │       └── vality
 │   │   │           └── adapter
 │   │   │               └── provider
 │   │   │                   ├── AdapterProviderApplication.java
@@ -85,6 +84,7 @@
 #### AppConfiguration
 
 основные конфигурации приложения, там находятся общие `beans`, например:
+
 ```
     @Bean
     @ConfigurationProperties("time.config")
@@ -109,8 +109,7 @@
 
 #### HandlerConfiguration
 
-Конфигурация каждого описанного раннее обработчика.
-В примере ниже описан обработчик для шага PRE_AUTH
+Конфигурация каждого описанного раннее обработчика. В примере ниже описан обработчик для шага PRE_AUTH
 
 ```
 @Configuration
@@ -143,13 +142,12 @@ public class ProcessorConfiguration {
 }
 ```
 
-
-
 ### Converter
 
 #### entry
 
-Содержит в себе классы, которые конвертируют входящие модели и структуры в общую модель входа GeneralEntryStateModel с которой далее и работаем.
+Содержит в себе классы, которые конвертируют входящие модели и структуры в общую модель входа GeneralEntryStateModel с
+которой далее и работаем.
 
 ```
 
@@ -194,7 +192,8 @@ public class CtxToEntryModelConverter implements Converter<PaymentContext, Gener
 
 #### exit
 
-Содержит в себе классы, которые конвертируют из общей модели выхода в PaymentProxyResult, в них производится анализ на основании шага (step), какой intent подготовить
+Содержит в себе классы, которые конвертируют из общей модели выхода в PaymentProxyResult, в них производится анализ на
+основании шага (step), какой intent подготовить
 
 ```
 @Slf4j
@@ -252,6 +251,7 @@ public class ExitModelToProxyResultConverter implements Converter<GeneralExitSta
 Содержит классы, которые из общей модели заполняют структуру для подготовки запроса к провайдеру
 
 Например:
+
 ```
 @Component
 public class EntryStateToCancelRequestConverter implements Converter<GeneralEntryStateModel, Request> {
@@ -271,7 +271,6 @@ public class EntryStateToCancelRequestConverter implements Converter<GeneralEntr
 }
 
 ```
-
 
 ## flow
 
@@ -331,19 +330,19 @@ public class StepResolverImpl implements StepResolver<GeneralEntryStateModel, Ge
 }
 ```
 
-
-#### handler 
+#### handler
 
 Обработчики шагов.
 
-Выполняют роль конвертации общей модели в запрос и его дальнейшее выполнение с обработкой полученного ответа
-Handler'ы описываются в CommonHandler, то есть если не использовать CommonHandler, можно и не использовать processor и converter
+Выполняют роль конвертации общей модели в запрос и его дальнейшее выполнение с обработкой полученного ответа Handler'ы
+описываются в CommonHandler, то есть если не использовать CommonHandler, можно и не использовать processor и converter
 
-В примере ниже видно, что данный класс будет использован, если удовлетворит условию `step == Step.CANCEL`,
-т.е. в данном случае будет выбран обработчик для вызова отмены платежа, после того, как будет известен обработчик,
-у него будет вызван метод handle(GeneralEntryStateModel entryStateModel) находящийся в `StepHandler` 
+В примере ниже видно, что данный класс будет использован, если удовлетворит условию `step == Step.CANCEL`, т.е. в данном
+случае будет выбран обработчик для вызова отмены платежа, после того, как будет известен обработчик, у него будет вызван
+метод handle(GeneralEntryStateModel entryStateModel) находящийся в `StepHandler`
 
-Передаем в `StepHandler<Request, Response>`(который имплементирует CommonHandler) объекты, которые ожидаем в качестве запроса и ответа от провайдера
+Передаем в `StepHandler<Request, Response>`(который имплементирует CommonHandler) объекты, которые ожидаем в качестве
+запроса и ответа от провайдера
 
 Видно, что в качестве объекта для запроса используется класс Request, в качестве ожидаемого ответа Response
 
@@ -352,8 +351,6 @@ Handler'ы описываются в CommonHandler, то есть если не 
 Конвертор заполнит модель Request данными из модели GeneralEntryStateModel
 
 Процессор на основании полученного `Response` и `GeneralEntryStateModel` заполнит `GeneralExitStateModel`
-
-
 
 ```
 public class CancelHandler extends StepHandler<Request, Response> {
@@ -375,18 +372,20 @@ public class CancelHandler extends StepHandler<Request, Response> {
 
 ```
 
-ps важно помнить, что после добавлении нового handler-а, нужно его прописать в [HandlerConfiguration](#handlerconfiguration), 
-но до этого, придется еще написать [entry](#entry) [converter-ы](#converter) для [handler-а](#handler), описать [processor](#processor) и модель ответа, нашем случае это Response
-
+ps важно помнить, что после добавлении нового handler-а, нужно его прописать
+в [HandlerConfiguration](#handlerconfiguration), но до этого, придется еще
+написать [entry](#entry) [converter-ы](#converter) для [handler-а](#handler), описать [processor](#processor) и модель
+ответа, нашем случае это Response
 
 #### Processor
 
-Процессоры отвечают за подготовку к общей модели выхода (GeneralExitStateModel), описываются в папке `processor`, 
-а матрешочное поведение описывается в конфигурации `ProcessorConfiguration`.
+Процессоры отвечают за подготовку к общей модели выхода (GeneralExitStateModel), описываются в папке `processor`, а
+матрешочное поведение описывается в конфигурации `ProcessorConfiguration`.
 
 Важно помнить, что после создания процессора, его необходимо добавить в [конфигурацию](#processorconfiguration).
 
 Пример processor-а:
+
 ```
 @Slf4j
 @RequiredArgsConstructor
@@ -417,10 +416,13 @@ public class CommonErrorProcessor implements Processor<GeneralExitStateModel, Re
 ```
 
 Таким образом видно, что, если условие с ошибкой не отработало
+
 ```
 if(response.getErrorCode() != null)
 ``` 
+
 то, будет вызван следующий processor
+
 ```
 return nextProcessor.process(response, entryStateModel);
 ```
