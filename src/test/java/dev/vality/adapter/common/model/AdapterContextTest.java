@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 import static org.junit.Assert.*;
 
@@ -13,18 +14,20 @@ public class AdapterContextTest {
 
     @Test
     public void testUnwrapped() throws IOException {
-        AdapterContext ac = new AdapterContext();
-        ac.setMd("kek");
+        AdapterContext adapterContext = new AdapterContext();
+        adapterContext.setMd("kek");
         PollingInfo pollingInfo = new PollingInfo();
         pollingInfo.setMaxDateTimePolling(Instant.now());
-        ac.setPollingInfo(pollingInfo);
+        adapterContext.setPollingInfo(pollingInfo);
         ObjectMapper objectMapper = new SimpleObjectMapper().createSimpleObjectMapperFactory();
-        String str = objectMapper.writeValueAsString(ac);
+        String str = objectMapper.writeValueAsString(adapterContext);
         assertTrue(str.startsWith("{\"md\":\"kek\",\"max_date_time_polling\":"));
-        AdapterContext acRestored = objectMapper.readValue(str, AdapterContext.class);
-        assertEquals(ac.getMd(), acRestored.getMd());
-        assertNotNull(acRestored.getPollingInfo());
-        assertEquals(ac.getPollingInfo().getMaxDateTimePolling(), acRestored.getPollingInfo().getMaxDateTimePolling());
+        AdapterContext adapterContextRestored = objectMapper.readValue(str, AdapterContext.class);
+        assertEquals(adapterContext.getMd(), adapterContextRestored.getMd());
+        assertNotNull(adapterContextRestored.getPollingInfo());
+        assertEquals(adapterContext.getPollingInfo().getMaxDateTimePolling().truncatedTo(ChronoUnit.MILLIS),
+                adapterContextRestored.getPollingInfo().getMaxDateTimePolling().truncatedTo(ChronoUnit.MILLIS)
+        );
     }
 
 }
