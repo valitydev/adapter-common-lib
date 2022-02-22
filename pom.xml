@@ -63,7 +63,7 @@
         <woody.version>[1.0.4,)</woody.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <jaxb-core.version>2.3.0.1</jaxb-core.version>
-        <jaxb-impl.version>2.3.2</jaxb-impl.version>
+        <jaxb-impl.version>3.0.2</jaxb-impl.version>
         <javax.activation-api.version>1.2.0</javax.activation-api.version>
         <logback.version>1.2.3</logback.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
