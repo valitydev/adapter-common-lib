@@ -72,7 +72,7 @@
         <damsel.version>1.541-df3e38d</damsel.version>
         <cds-proto.version>1.66-01353ce</cds-proto.version>
 
-        <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
+        <logstash-logback-encoder.version>7.1.1</logstash-logback-encoder.version>
         <error-mapping-java.version>1.0.0</error-mapping-java.version>
     </properties>
 
