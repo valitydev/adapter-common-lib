@@ -8,12 +8,15 @@ import dev.vality.adapter.common.utils.mpi.model.ThreeDSecure;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.StringReader;
 import java.util.Optional;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ThreeDSecureUtils {
 
     private static JAXBContext jaxbContext;
