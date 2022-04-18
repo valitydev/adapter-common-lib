@@ -51,7 +51,7 @@
         <adapter-thrift-lib.version>1.0.0</adapter-thrift-lib.version>
         <adapter-client-lib.version>1.0.1</adapter-client-lib.version>
 
-        <spring>5.3.14</spring>
+        <spring>5.3.18</spring>
         <spring-boot>2.3.8.RELEASE</spring-boot>
 
         <apache.commons.lang3.version>3.9</apache.commons.lang3.version>
