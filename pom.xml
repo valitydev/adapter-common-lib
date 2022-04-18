@@ -65,7 +65,7 @@
         <jaxb-core.version>2.3.0.1</jaxb-core.version>
         <jaxb-impl.version>2.3.2</jaxb-impl.version>
         <javax.activation-api.version>1.2.0</javax.activation-api.version>
-        <logback.version>1.2.3</logback.version>
+        <logback.version>1.2.9</logback.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
 
