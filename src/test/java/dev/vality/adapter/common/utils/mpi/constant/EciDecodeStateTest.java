@@ -1,24 +1,24 @@
 package dev.vality.adapter.common.utils.mpi.constant;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EciDecodeStateTest {
 
     @Test
     public void isEciDecodeEnabled() {
         Map<String, String> options = new HashMap<>();
-        assertFalse("Default disabled", EciDecodeState.isEnabled(options));
+        assertFalse(EciDecodeState.isEnabled(options));
 
         options.put(EciDecodeState.ECI_DECODE, EciDecodeState.ENABLED);
-        assertTrue("Excepted enabled", EciDecodeState.isEnabled(options));
+        assertTrue(EciDecodeState.isEnabled(options));
 
         options.put(EciDecodeState.ECI_DECODE, EciDecodeState.DISABLED);
-        assertFalse("Excepted disabled", EciDecodeState.isEnabled(options));
+        assertFalse(EciDecodeState.isEnabled(options));
     }
 }

@@ -5,10 +5,10 @@ import dev.vality.cds.storage.ExpDate;
 import dev.vality.damsel.domain.BankCard;
 import dev.vality.damsel.domain.BankCardExpDate;
 import dev.vality.java.cds.utils.model.CardDataProxyModel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static dev.vality.adapter.common.utils.converter.BankCardUtils.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BankCardUtilsTest {
 

@@ -2,16 +2,17 @@ package dev.vality.adapter.common.utils.times;
 
 import dev.vality.adapter.common.model.PollingInfo;
 import dev.vality.adapter.common.state.backoff.BackOffExecution;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class ExponentialBackOffPollingServiceTest {
 
-    ExponentialBackOffPollingService exponentialBackOffPollingService =
-            new ExponentialBackOffPollingService<PollingInfo>();
+    ExponentialBackOffPollingService<PollingInfo> exponentialBackOffPollingService =
+            new ExponentialBackOffPollingService<>();
 
     @Test
     public void testPrepareBackOffExecution() throws InterruptedException {
@@ -19,11 +20,11 @@ public class ExponentialBackOffPollingServiceTest {
         BackOffExecution backOffExecution =
                 exponentialBackOffPollingService.prepareBackOffExecution(pollingInfo, new HashMap<>());
         Long result = backOffExecution.nextBackOff();
-        Assert.assertEquals(2, result.longValue());
+        assertEquals(2, result.longValue());
         pollingInfo.setMaxDateTimePolling(Instant.now());
         backOffExecution = exponentialBackOffPollingService.prepareBackOffExecution(pollingInfo, new HashMap<>());
         result = backOffExecution.nextBackOff();
-        Assert.assertEquals(2, result.longValue());
+        assertEquals(2, result.longValue());
     }
 
     @Test
@@ -34,15 +35,15 @@ public class ExponentialBackOffPollingServiceTest {
         BackOffExecution backOffExecution =
                 exponentialBackOffPollingService.prepareBackOffExecution(pollingInfo, new HashMap<>());
         Long result = backOffExecution.nextBackOff();
-        Assert.assertEquals(2, result.longValue());
+        assertEquals(2, result.longValue());
 
         Thread.sleep(result * 1000L);
         int nextInterval = exponentialBackOffPollingService.prepareNextPollingInterval(pollingInfo, new HashMap<>());
-        Assert.assertEquals(4, nextInterval);
+        assertEquals(4, nextInterval);
 
         Thread.sleep(nextInterval * 1000L);
         nextInterval = exponentialBackOffPollingService.prepareNextPollingInterval(pollingInfo, new HashMap<>());
-        Assert.assertEquals(8, nextInterval);
+        assertEquals(8, nextInterval);
     }
 
     @Test
@@ -55,15 +56,15 @@ public class ExponentialBackOffPollingServiceTest {
         BackOffExecution backOffExecution =
                 exponentialBackOffPollingService.prepareBackOffExecution(pollingInfo, options);
         Long result = backOffExecution.nextBackOff();
-        Assert.assertEquals(1, result.longValue());
+        assertEquals(1, result.longValue());
 
         Thread.sleep(result * 1000L);
         int nextInterval = exponentialBackOffPollingService.prepareNextPollingInterval(pollingInfo, options);
-        Assert.assertEquals(2, nextInterval);
+        assertEquals(2, nextInterval);
 
         Thread.sleep(nextInterval * 1000L);
         nextInterval = exponentialBackOffPollingService.prepareNextPollingInterval(pollingInfo, options);
-        Assert.assertEquals(4, nextInterval);
+        assertEquals(4, nextInterval);
     }
 
     @Test
@@ -76,14 +77,14 @@ public class ExponentialBackOffPollingServiceTest {
         BackOffExecution backOffExecution =
                 exponentialBackOffPollingService.prepareBackOffExecution(pollingInfo, options);
         Long result = backOffExecution.nextBackOff();
-        Assert.assertEquals(2, result.longValue());
+        assertEquals(2, result.longValue());
 
         Thread.sleep(result * 1000L);
         int nextInterval = exponentialBackOffPollingService.prepareNextPollingInterval(pollingInfo, options);
-        Assert.assertEquals(2, nextInterval);
+        assertEquals(2, nextInterval);
 
         Thread.sleep(nextInterval * 1000L);
         nextInterval = exponentialBackOffPollingService.prepareNextPollingInterval(pollingInfo, options);
-        Assert.assertEquals(2, nextInterval);
+        assertEquals(2, nextInterval);
     }
 }

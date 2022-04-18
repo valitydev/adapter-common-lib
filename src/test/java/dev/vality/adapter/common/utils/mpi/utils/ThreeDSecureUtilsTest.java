@@ -4,10 +4,11 @@ import dev.vality.adapter.common.utils.mpi.model.Message;
 import dev.vality.adapter.common.utils.mpi.model.PaRes;
 import dev.vality.adapter.common.utils.mpi.model.TX;
 import dev.vality.adapter.common.utils.mpi.model.ThreeDSecure;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 public class ThreeDSecureUtilsTest {
 

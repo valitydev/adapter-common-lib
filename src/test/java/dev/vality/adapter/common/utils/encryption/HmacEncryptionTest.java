@@ -1,9 +1,9 @@
 package dev.vality.adapter.common.utils.encryption;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static dev.vality.adapter.common.utils.encryption.HmacEncryption.calculateHMacSha256;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HmacEncryptionTest {
 
@@ -16,7 +16,7 @@ public class HmacEncryptionTest {
     public void testHMacSha256() {
         String expectedHMac = "3fd9ee801d3aeda5d33af83580279ef920ad78e8883a0b9bc3942c74129db2f0";
         String hmac = calculateHMacSha256(message, secret);
-        assertEquals("HMAC SHA256 is not equal expected", expectedHMac, hmac);
+        assertEquals(expectedHMac, hmac);
     }
 
 }
