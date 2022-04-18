@@ -52,18 +52,18 @@
         <adapter-client-lib.version>1.0.1</adapter-client-lib.version>
 
         <spring>5.3.19</spring>
-        <spring-boot>2.5.12</spring-boot>
+        <spring-boot>2.6.6</spring-boot>
 
         <apache.commons.lang3.version>3.12.0</apache.commons.lang3.version>
         <apache.commons.codec.version>1.15</apache.commons.codec.version>
 
         <slf4j.version>1.7.36</slf4j.version>
         <lombok.version>1.18.24</lombok.version>
-        <jackson.version>2.13.2.2</jackson.version>
+        <jackson.version>2.13.2</jackson.version>
         <woody.version>[1.0.4,)</woody.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
-        <jaxb-core.version>2.3.0.1</jaxb-core.version>
-        <jaxb-impl.version>2.3.6</jaxb-impl.version>
+        <jaxb-core.version>3.0.2</jaxb-core.version>
+        <jaxb-impl.version>3.0.2</jaxb-impl.version>
         <javax.activation-api.version>1.2.0</javax.activation-api.version>
         <logback.version>1.2.11</logback.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
@@ -72,7 +72,7 @@
         <damsel.version>1.558-3efe7df</damsel.version>
         <cds-proto.version>1.66-01353ce</cds-proto.version>
 
-        <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
+        <logstash-logback-encoder.version>7.1.1</logstash-logback-encoder.version>
         <error-mapping-java.version>1.0.0</error-mapping-java.version>
     </properties>
 
