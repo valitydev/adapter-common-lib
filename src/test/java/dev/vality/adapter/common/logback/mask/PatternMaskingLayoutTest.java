@@ -18,11 +18,11 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PatternMaskingLayoutTest {
+
     private PatternMaskingLayout patternMaskingLayout = new PatternMaskingLayout();
 
     @BeforeEach
     public void init() {
-
         patternMaskingLayout.setPattern("%-5p [%d{ISO8601}] %m%n");
 
         String[] maskPatterns = {"\\b\\d{6}([\\d\\s]{2,9})\\d{4}\\b", "(\\b\\d{3}\\b)"};

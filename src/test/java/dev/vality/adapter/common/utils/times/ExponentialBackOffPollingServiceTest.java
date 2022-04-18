@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ExponentialBackOffPollingServiceTest {
 
-    ExponentialBackOffPollingService exponentialBackOffPollingService =
-            new ExponentialBackOffPollingService<PollingInfo>();
+    ExponentialBackOffPollingService<PollingInfo> exponentialBackOffPollingService =
+            new ExponentialBackOffPollingService<>();
 
     @Test
     public void testPrepareBackOffExecution() throws InterruptedException {
