@@ -5,8 +5,6 @@ import dev.vality.adapter.common.utils.mpi.model.Message;
 import dev.vality.adapter.common.utils.mpi.model.PaRes;
 import dev.vality.adapter.common.utils.mpi.model.TX;
 import dev.vality.adapter.common.utils.mpi.model.ThreeDSecure;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.xml.bind.JAXBContext;
@@ -16,7 +14,6 @@ import java.io.StringReader;
 import java.util.Optional;
 
 @Slf4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ThreeDSecureUtils {
 
     private static JAXBContext jaxbContext;

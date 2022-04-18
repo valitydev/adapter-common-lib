@@ -5,8 +5,8 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.classic.spi.LoggerContextVO;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 
@@ -15,12 +15,12 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PatternMaskingLayoutTest {
     private PatternMaskingLayout patternMaskingLayout = new PatternMaskingLayout();
 
-    @Before
+    @BeforeEach
     public void init() {
 
         patternMaskingLayout.setPattern("%-5p [%d{ISO8601}] %m%n");

@@ -1,12 +1,12 @@
 package dev.vality.adapter.common.utils.mpi.constant;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.springframework.test.util.AssertionErrors.assertFalse;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 public class EciDecodeStateTest {
 
