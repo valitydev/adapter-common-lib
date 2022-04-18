@@ -5,11 +5,11 @@ import dev.vality.adapter.common.utils.mpi.model.Message;
 import dev.vality.adapter.common.utils.mpi.model.PaRes;
 import dev.vality.adapter.common.utils.mpi.model.TX;
 import dev.vality.adapter.common.utils.mpi.model.ThreeDSecure;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
 import java.util.Optional;
 
