@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.vality.damsel.domain.Failure;
 import dev.vality.geck.serializer.kit.tbase.TErrorUtil;
-import dev.vality.woody.api.flow.error.WUnavailableResultException;
-import dev.vality.woody.api.flow.error.WUndefinedResultException;
+import dev.vality.woody.api.flow.error.*;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,12 +61,10 @@ public class ErrorMapping {
 
     private static List<Error> initErrorList(InputStream inputStream, ObjectMapper objectMapper) {
         try {
-            var errors = objectMapper.readValue(
+            return objectMapper.readValue(
                     inputStream,
-                    new TypeReference<List<Error>>() {
+                    new TypeReference<>() {
                     });
-            errors.add(getDefaultError());
-            return errors;
         } catch (JsonParseException e) {
             throw new ErrorMappingException("Json can't parse data from file", e);
         } catch (JsonMappingException e) {
@@ -76,18 +74,16 @@ public class ErrorMapping {
         }
     }
 
-    private static Error getDefaultError() {
-        var error = new Error();
-        error.setCodeRegex(".*");
-        error.setDescriptionRegex(".*");
-        error.setMapping("ResultUnexpected");
-        return error;
-    }
-
     private Error findError(String code, String description, String state) {
         return findErrorInConfig(code, description, state)
-                .orElseThrow(() -> new ErrorMappingException(
-                        String.format("Error not found. Code %s, description %s, state %s", code, description, state)));
+                .orElseThrow(() -> {
+                    WErrorDefinition errorDefinition = new WErrorDefinition(WErrorSource.INTERNAL);
+                    errorDefinition.setErrorType(WErrorType.UNEXPECTED_ERROR);
+                    throw new WRuntimeException(
+                            String.format("Unexpected result, code = %s, description = %s, state = %s",
+                                    code, description, state),
+                            errorDefinition);
+                });
     }
 
     private Optional<Error> findErrorInConfig(String code, String description, String state) {
@@ -108,7 +104,7 @@ public class ErrorMapping {
         if (str1 == null || str2 == null) {
             return true;
         }
-        return str1.equals(str2);
+        return StringUtils.equals(str1, str2);
     }
 
     private boolean matchError(Error error, String code, String description, String state) {
@@ -129,14 +125,9 @@ public class ErrorMapping {
     }
 
     private void checkWoodyError(Error error, String code, String description) {
-        if (error == null) {
-            throw new IllegalArgumentException("Error not found");
-        } else if (MappingExceptions.RESULT_UNDEFINED.getMappingException().equals(error.getMapping())) {
+        if (MappingExceptions.RESULT_UNDEFINED.getMappingException().equals(error.getMapping())) {
             throw new WUndefinedResultException(
                     String.format("Undefined result %s, code = %s, description = %s", error, code, description));
-        } else if (MappingExceptions.RESULT_UNEXPECTED.getMappingException().equals(error.getMapping())) {
-            throw new RuntimeException(
-                    String.format("Unexpected error %s, code = %s, description = %s", error, code, description));
         } else if (MappingExceptions.RESULT_UNAVAILABLE.getMappingException().equals(error.getMapping())) {
             throw new WUnavailableResultException(
                     String.format("Unavailable result %s, code = %s, description = %s", error, code, description));
