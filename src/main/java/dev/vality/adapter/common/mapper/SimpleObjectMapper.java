@@ -18,7 +18,7 @@ public class SimpleObjectMapper {
     }
 
     public ObjectMapper createUpperSnakeCaseStrategyMapper() {
-        return createSimpleObjectMapperFactory().setPropertyNamingStrategy(new UpperSnakeCaseStrategy());
+        return createSimpleObjectMapperFactory()
+                .setPropertyNamingStrategy(new UpperSnakeCaseStrategy());
     }
-
 }
