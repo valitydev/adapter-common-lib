@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.introspect.AnnotatedField;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
 
 public class UpperSnakeCaseStrategy extends PropertyNamingStrategy {
+
     @Override
     public String nameForField(MapperConfig<?> config, AnnotatedField field, String defaultName) {
         return convert(field.getName());
