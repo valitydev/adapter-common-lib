@@ -20,7 +20,7 @@ public class ErrorMappingTest {
         error1.setMapping("authorization_failed:provider_malfunction");
         error1.setCodeRegex("00002");
         error1.setDescriptionRegex("Invalid Merchant Name");
-        ErrorMapping errorMapping = new ErrorMapping("'%s' - '%s'", List.of(error));
+        var errorMapping = new ErrorMapping("'%s' - '%s'", List.of(error, error1));
         assertThrows(WRuntimeException.class, () -> errorMapping.mapFailure("unknown"));
         assertEquals(
                 "Failure(code:authorization_failed, reason:'00001' - 'null', sub:SubFailure(code:unknown))",
