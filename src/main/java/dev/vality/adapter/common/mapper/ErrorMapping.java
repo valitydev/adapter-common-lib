@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.vality.damsel.domain.Failure;
 import dev.vality.geck.serializer.kit.tbase.TErrorUtil;
 import dev.vality.woody.api.flow.error.*;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -79,7 +78,7 @@ public class ErrorMapping {
                 .orElseThrow(() -> {
                     WErrorDefinition errorDefinition = new WErrorDefinition(WErrorSource.INTERNAL);
                     errorDefinition.setErrorType(WErrorType.UNEXPECTED_ERROR);
-                    throw new WRuntimeException(
+                    return new WRuntimeException(
                             String.format("Unexpected result, code = %s, description = %s, state = %s",
                                     code, description, state),
                             errorDefinition);
@@ -104,7 +103,7 @@ public class ErrorMapping {
         if (str1 == null || str2 == null) {
             return true;
         }
-        return StringUtils.equals(str1, str2);
+        return str1.equals(str2);
     }
 
     private boolean matchError(Error error, String code, String description, String state) {
