@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
@@ -128,6 +128,17 @@
             <version>0.0.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <!-- Spring -->
         <dependency>
@@ -175,9 +186,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>dev.vality.adapter-client-lib</groupId>
-            <artifactId>hellgate-adapter-client</artifactId>
-            <version>1.0.1</version>
+            <groupId>dev.vality</groupId>
+            <artifactId>bender-proto</artifactId>
+            <version>1.20-be9cdeb</version>
             <scope>provided</scope>
         </dependency>
 

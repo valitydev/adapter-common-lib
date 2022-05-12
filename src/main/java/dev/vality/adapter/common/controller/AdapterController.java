@@ -1,10 +1,10 @@
 package dev.vality.adapter.common.controller;
 
+import dev.vality.adapter.common.exception.HellgateException;
+import dev.vality.adapter.common.hellgate.HellgateAdapterClient;
 import dev.vality.adapter.common.model.Callback;
 import dev.vality.adapter.common.state.deserializer.CallbackDeserializer;
 import dev.vality.adapter.common.state.serializer.CallbackSerializer;
-import dev.vality.adapter.helpers.hellgate.HellgateAdapterClient;
-import dev.vality.adapter.helpers.hellgate.exception.HellgateException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -56,5 +56,4 @@ public class AdapterController {
         log.info("ProcessCallback response {}", resp);
         return resp;
     }
-
 }
