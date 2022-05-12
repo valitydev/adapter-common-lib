@@ -15,8 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 
-import static dev.vality.java.damsel.utils.creators.ProxyProviderPackageCreators.createCallbackResult;
-import static dev.vality.java.damsel.utils.creators.ProxyProviderPackageCreators.createIntentWithSleepIntent;
+import static dev.vality.adapter.common.utils.damsel.creators.ProxyProviderPackageCreators.createCallbackResult;
+import static dev.vality.adapter.common.utils.damsel.creators.ProxyProviderPackageCreators.createIntentWithSleepIntent;
 
 @Slf4j
 @RequiredArgsConstructor

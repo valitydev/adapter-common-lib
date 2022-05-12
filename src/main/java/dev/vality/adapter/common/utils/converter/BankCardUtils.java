@@ -1,10 +1,10 @@
 package dev.vality.adapter.common.utils.converter;
 
+import dev.vality.adapter.common.utils.cds.model.CardDataProxyModel;
 import dev.vality.cds.storage.CardData;
 import dev.vality.cds.storage.ExpDate;
 import dev.vality.damsel.domain.BankCard;
 import dev.vality.damsel.domain.BankCardExpDate;
-import dev.vality.java.cds.utils.model.CardDataProxyModel;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
