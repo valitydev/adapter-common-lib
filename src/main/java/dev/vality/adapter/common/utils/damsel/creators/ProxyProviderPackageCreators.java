@@ -40,14 +40,6 @@ public class ProxyProviderPackageCreators {
         return createInvoiceWithPayment(paymentInfo, INVOICE_PAYMENT_SEPARATOR_POINT);
     }
 
-    public static Session createSession(TargetInvoicePaymentStatus target, byte[] state) {
-        return new Session(target).setState(state);
-    }
-
-    public static Session createSession(TargetInvoicePaymentStatus target) {
-        return createSession(target, null);
-    }
-
     // RecurrentTokenIntent
     public static RecurrentTokenSuccess createRecurrentTokenSuccess(String token) {
         return new RecurrentTokenSuccess(token);
@@ -221,6 +213,14 @@ public class ProxyProviderPackageCreators {
                 .setCash(cash);
     }
 
+    public static Session createSession(TargetInvoicePaymentStatus target, byte[] state) {
+        return new Session(target).setState(state);
+    }
+
+    public static Session createSession(TargetInvoicePaymentStatus target) {
+        return createSession(target, null);
+    }
+
     public static Session createSession(byte[] state) {
         return new Session().setState(state);
     }
@@ -283,7 +283,8 @@ public class ProxyProviderPackageCreators {
     }
 
     public static Intent createFinishIntentFailure(String code, String description) {
-        return Intent.finish(new FinishIntent(createFinishStatusFailure(DomainPackageCreators.createFailure(code, description))));
+        return Intent.finish(new FinishIntent(createFinishStatusFailure(
+                DomainPackageCreators.createFailure(code, description))));
     }
 
     public static Intent createFinishIntentFailure(Failure failure) {
@@ -302,15 +303,6 @@ public class ProxyProviderPackageCreators {
         return new SuspendIntent(tag, createTimerTimeout(timer)).setUserInteraction(userInteraction);
     }
 
-    public static SuspendIntent createSuspendIntentTimeoutBehaviourWithFailure(String tag,
-                                                                               Integer timer,
-                                                                               UserInteraction userInteraction,
-                                                                               Failure failure) {
-        return new SuspendIntent(tag, createTimerTimeout(timer))
-                .setUserInteraction(userInteraction)
-                .setTimeoutBehaviour(createTimeoutBehaviourWithFailure(failure));
-    }
-
     public static SuspendIntent createSuspendIntent(String tag,
                                                     Integer timer,
                                                     UserInteraction userInteraction,
@@ -318,6 +310,15 @@ public class ProxyProviderPackageCreators {
         return new SuspendIntent(tag, createTimerTimeout(timer))
                 .setUserInteraction(userInteraction)
                 .setTimeoutBehaviour(timeoutBehaviour);
+    }
+
+    public static SuspendIntent createSuspendIntentTimeoutBehaviourWithFailure(String tag,
+                                                                               Integer timer,
+                                                                               UserInteraction userInteraction,
+                                                                               Failure failure) {
+        return new SuspendIntent(tag, createTimerTimeout(timer))
+                .setUserInteraction(userInteraction)
+                .setTimeoutBehaviour(createTimeoutBehaviourWithFailure(failure));
     }
 
     public static TimeoutBehaviour createTimeoutBehaviour(OperationFailure operationFailure) {
@@ -368,8 +369,8 @@ public class ProxyProviderPackageCreators {
         return createUserInteraction(createBrowserGetRequest(url));
     }
 
-    public static UserInteraction createUserInteraction(BrowserHTTPRequest browserHTTPRequest) {
-        return UserInteraction.redirect(browserHTTPRequest);
+    public static UserInteraction createUserInteraction(BrowserHTTPRequest browserHttpRequest) {
+        return UserInteraction.redirect(browserHttpRequest);
     }
 
     public static BrowserHTTPRequest createBrowserPostRequest(String url, Map<String, String> form) {
