@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
@@ -44,9 +44,8 @@
         <dockerfile.registry>${env.REGISTRY}</dockerfile.registry>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <adapter-thrift-lib.version>1.0.0</adapter-thrift-lib.version>
-        <spring>5.3.19</spring>
-        <spring-boot>2.6.6</spring-boot>
+        <spring>5.3.20</spring>
+        <spring-boot>2.6.7</spring-boot>
         <jackson.version>2.13.2</jackson.version>
         <logback.version>1.2.11</logback.version>
     </properties>
@@ -160,30 +159,14 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>damsel</artifactId>
-            <version>1.558-3efe7df</version>
+            <version>1.563-d384c12</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.vality.adapter-thrift-lib</groupId>
-            <artifactId>damsel-utils</artifactId>
-            <version>${adapter-thrift-lib.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.xml.bind</groupId>
-                    <artifactId>jaxb-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>cds-proto</artifactId>
             <version>1.66-01353ce</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.vality.adapter-thrift-lib</groupId>
-            <artifactId>cds-utils</artifactId>
-            <version>${adapter-thrift-lib.version}</version>
         </dependency>
         <dependency>
             <groupId>dev.vality.woody</groupId>
@@ -220,7 +203,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.0.0-M6</version>
             </plugin>
         </plugins>
     </build>

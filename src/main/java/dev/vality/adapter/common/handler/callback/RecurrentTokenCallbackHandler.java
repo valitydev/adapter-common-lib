@@ -16,9 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 
-import static dev.vality.java.damsel.utils.creators.BasePackageCreators.createTimerTimeout;
-import static dev.vality.java.damsel.utils.creators.ProxyProviderPackageCreators.createRecurrentTokenCallbackResult;
-import static dev.vality.java.damsel.utils.creators.ProxyProviderPackageCreators.createSleepIntent;
+import static dev.vality.adapter.common.utils.damsel.creators.BasePackageCreators.createTimerTimeout;
+import static dev.vality.adapter.common.utils.damsel.creators.ProxyProviderPackageCreators.createRecurrentTokenCallbackResult;
+import static dev.vality.adapter.common.utils.damsel.creators.ProxyProviderPackageCreators.createSleepIntent;
 
 @Slf4j
 @RequiredArgsConstructor

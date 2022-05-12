@@ -1,15 +1,15 @@
 package dev.vality.adapter.common.handler;
 
 import dev.vality.adapter.common.utils.converter.PaymentResourceTypeResolver;
+import dev.vality.adapter.common.utils.damsel.extractors.ProxyProviderPackageExtractors;
 import dev.vality.damsel.proxy_provider.*;
-import dev.vality.java.damsel.utils.extractors.ProxyProviderPackageExtractors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
 
 import java.nio.ByteBuffer;
 
-import static dev.vality.java.damsel.utils.verification.ProxyProviderVerification.isUndefinedResultOrUnavailable;
+import static dev.vality.adapter.common.utils.damsel.verification.ProxyProviderVerification.isUndefinedResultOrUnavailable;
 
 @Slf4j
 @RequiredArgsConstructor
