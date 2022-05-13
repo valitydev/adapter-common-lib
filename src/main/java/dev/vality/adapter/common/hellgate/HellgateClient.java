@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
 
 @Slf4j
 @RequiredArgsConstructor
-public class HellgateAdapterClient {
+public class HellgateClient {
 
     private final ProviderProxyHostSrv.Iface providerProxyHostSrv;
 
