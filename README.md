@@ -6,7 +6,6 @@
 + функционал архивированной https://github.com/valitydev/adapter-thrift-lib
 + функционал архивированной https://github.com/valitydev/error-mapping-java
 + компоненты
-
 ```
 ├── component
     ├── LoggingInterceptor.class
@@ -16,6 +15,5 @@
     ├── SimpleErrorMapping.class
     └── SimpleObjectMapper.class
 ```
-
 + аспект логгирование
 + базовые утилиты
