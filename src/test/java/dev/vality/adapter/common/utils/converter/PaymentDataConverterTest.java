@@ -1,5 +1,6 @@
 package dev.vality.adapter.common.utils.converter;
 
+import dev.vality.adapter.common.utils.PaymentDataConverter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

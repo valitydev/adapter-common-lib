@@ -1,13 +1,14 @@
 package dev.vality.adapter.common.utils.converter;
 
-import dev.vality.adapter.common.utils.cds.model.CardDataProxyModel;
+import dev.vality.adapter.common.cds.model.CardDataProxyModel;
+import dev.vality.adapter.common.utils.BankCardUtils;
 import dev.vality.cds.storage.CardData;
 import dev.vality.cds.storage.ExpDate;
 import dev.vality.damsel.domain.BankCard;
 import dev.vality.damsel.domain.BankCardExpDate;
 import org.junit.jupiter.api.Test;
 
-import static dev.vality.adapter.common.utils.converter.BankCardUtils.*;
+import static dev.vality.adapter.common.utils.BankCardUtils.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BankCardUtilsTest {

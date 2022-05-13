@@ -1,5 +1,6 @@
 package dev.vality.adapter.common.utils.generator;
 
+import dev.vality.adapter.common.utils.IpGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
