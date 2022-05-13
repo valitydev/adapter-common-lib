@@ -1,7 +1,21 @@
 # Adapter-common-lib
 
-Библиотека, которая включает общие для всех адаптеров классы.
+Бибилиотека включает в себя
 
-### Оглавление:
++ функционал архивированной https://github.com/valitydev/adapter-client-lib
++ функционал архивированной https://github.com/valitydev/adapter-thrift-lib
++ функционал архивированной https://github.com/valitydev/error-mapping-java
++ компоненты
 
-1. [Общие данные по проекту при написании адаптера](docs/common.md)
+```
+├── component
+    ├── LoggingInterceptor.class
+    ├── NetworkFilterComponent.class
+    ├── RequestLoggingAspect.class
+    ├── RestTemplateComponent.class
+    ├── SimpleErrorMapping.class
+    └── SimpleObjectMapper.class
+```
+
++ аспект логгирование
++ базовые утилиты
