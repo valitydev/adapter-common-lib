@@ -78,14 +78,7 @@ public class ErrorMapping {
 
     private Error findError(String code, String description, String state) {
         return findErrorInConfig(code, description, state)
-                .orElseThrow(() -> {
-                    WErrorDefinition errorDefinition = new WErrorDefinition(WErrorSource.INTERNAL);
-                    errorDefinition.setErrorType(WErrorType.UNEXPECTED_ERROR);
-                    return new WRuntimeException(
-                            String.format("Unexpected result, code = %s, description = %s, state = %s",
-                                    code, description, state),
-                            errorDefinition);
-                });
+                .orElseThrow(() -> getUnexpectedError(code, description, state));
     }
 
     private Optional<Error> findErrorInConfig(String code, String description, String state) {
@@ -133,6 +126,17 @@ public class ErrorMapping {
         } else if (MappingExceptions.RESULT_UNAVAILABLE.getMappingException().equals(error.getMapping())) {
             throw new WUnavailableResultException(
                     String.format("Unavailable result %s, code = %s, description = %s", error, code, description));
+        } else if (MappingExceptions.RESULT_UNEXPECTED.getMappingException().equals(error.getMapping())) {
+            throw getUnexpectedError(code, description, null);
         }
+    }
+
+    private WRuntimeException getUnexpectedError(String code, String description, String state) {
+        var errorDefinition = new WErrorDefinition(WErrorSource.INTERNAL);
+        errorDefinition.setErrorType(WErrorType.UNEXPECTED_ERROR);
+        return new WRuntimeException(
+                String.format("Unexpected result, code = %s, description = %s, state = %s",
+                        code, description, state),
+                errorDefinition);
     }
 }
