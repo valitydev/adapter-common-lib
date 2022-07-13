@@ -18,8 +18,11 @@ class BankCardExtractorTest {
     @Test
     void initCardDataProxyModel() {
         CardDataProxyModel cardDataProxyModel =
-                BankCardExtractor.initCardDataProxyModel(new BankCard().setToken("test")
-                                .setExpDate(new BankCardExpDate()), new CardData(),
+                BankCardExtractor.initCardDataProxyModel(
+                        new BankCard()
+                                .setToken("test")
+                                .setExpDate(new BankCardExpDate()),
+                        new CardData(),
                         List.of(TEST_1, TEST_2));
 
         assertEquals(cardDataProxyModel.getCardholderName(), TEST_1);
