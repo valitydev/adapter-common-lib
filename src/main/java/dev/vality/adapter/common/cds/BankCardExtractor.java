@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Locale;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -19,11 +20,19 @@ public class BankCardExtractor {
     private static final String NAME_REGEXP = "[^a-zA-Z +]";
 
     public static CardDataProxyModel initCardDataProxyModel(BankCard bankCard, CardData cardData) {
+        return initCardDataProxyModel(bankCard, cardData, null);
+    }
+
+    public static CardDataProxyModel initCardDataProxyModel(BankCard bankCard,
+                                                            CardData cardData,
+                                                            List<String> cardHoldersNames) {
         String cardHolder;
         if (bankCard.isSetCardholderName()) {
             cardHolder = bankCard.getCardholderName();
         } else if (cardData.isSetCardholderName()) {
             cardHolder = cardData.getCardholderName();
+        } else if (cardHoldersNames != null && cardHoldersNames.size() > 0) {
+            cardHolder = getCardHolderFromList(cardHoldersNames, bankCard.getToken());
         } else {
             cardHolder = (FAKER_NAME.firstName() + StringUtils.SPACE + FAKER_NAME.lastName())
                     .replaceAll(NAME_REGEXP, StringUtils.EMPTY)
@@ -40,5 +49,9 @@ public class BankCardExtractor {
                 .expMonth(bankCard.isSetExpDate() ? bankCard.getExpDate().getMonth() : cardData.getExpDate().getMonth())
                 .expYear(bankCard.isSetExpDate() ? bankCard.getExpDate().getYear() : cardData.getExpDate().getYear())
                 .build();
+    }
+
+    private static String getCardHolderFromList(List<String> cardHoldersNames, String cardToken) {
+        return cardHoldersNames.get(Math.abs(cardToken.hashCode() % cardHoldersNames.size()));
     }
 }
