@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
 import org.springframework.cache.annotation.Cacheable;
 
+import java.util.List;
+
 import static dev.vality.adapter.common.damsel.ProxyProviderPackageExtractors.*;
 
 @Slf4j
@@ -47,9 +49,13 @@ public class CdsStorageClient {
     }
 
     public CardDataProxyModel getCardData(PaymentContext context) {
+        return getCardDataWithListHolders(context, null);
+    }
+
+    public CardDataProxyModel getCardDataWithListHolders(PaymentContext context, List<String> cardHoldersNames) {
         CardData cardData = getCardData(extractBankCardToken(extractPaymentResource(context)));
         BankCard bankCard = extractBankCard(context.getPaymentInfo());
-        return BankCardExtractor.initCardDataProxyModel(bankCard, cardData);
+        return BankCardExtractor.initCardDataProxyModel(bankCard, cardData, cardHoldersNames);
     }
 
     public CardDataProxyModel getCardData(Withdrawal withdrawal) {
