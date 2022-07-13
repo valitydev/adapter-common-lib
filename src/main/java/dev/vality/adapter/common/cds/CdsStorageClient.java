@@ -51,6 +51,7 @@ public class CdsStorageClient {
     public CardDataProxyModel getCardData(PaymentContext context) {
         return getCardDataWithListHolders(context, null);
     }
+
     public CardDataProxyModel getCardData(Withdrawal withdrawal) {
         Destination destination = withdrawal.getDestination();
         if (!destination.isSetBankCard()) {
