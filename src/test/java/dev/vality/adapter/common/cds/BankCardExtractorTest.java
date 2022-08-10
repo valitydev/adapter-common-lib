@@ -25,6 +25,23 @@ class BankCardExtractorTest {
                         new CardData(),
                         List.of(TEST_1, TEST_2));
 
-        assertEquals(cardDataProxyModel.getCardholderName(), TEST_1);
+        assertEquals(TEST_1, cardDataProxyModel.getCardholderName());
+    }
+
+    @Test
+    void initCardDataProxyModelWithOptionalExpDate() {
+        String pan = "pan";
+        CardDataProxyModel cardDataProxyModel =
+                BankCardExtractor.initCardDataProxyModelWithOptionalExpDate(
+                        new BankCard()
+                                .setToken("test")
+                                .setCardholderName(TEST_1),
+                        new CardData()
+                                .setPan(pan));
+
+        assertEquals(TEST_1, cardDataProxyModel.getCardholderName());
+        assertEquals(pan, cardDataProxyModel.getPan());
+        assertEquals(0, cardDataProxyModel.getExpMonth());
+        assertEquals(0, cardDataProxyModel.getExpYear());
     }
 }
