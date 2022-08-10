@@ -58,7 +58,7 @@ public class CdsStorageClient {
             throw new CdsStorageException("Token must be set for card data, withdrawalId " + withdrawal.getId());
         }
         BankCard bankCard = destination.getBankCard();
-        return BankCardExtractor.initCardDataProxyModel(bankCard, getCardData(bankCard.getToken()));
+        return BankCardExtractor.initCardDataProxyModelWithOptionalExpDate(bankCard, getCardData(bankCard.getToken()));
     }
 
     public CardDataProxyModel getCardData(RecurrentTokenContext context) {
