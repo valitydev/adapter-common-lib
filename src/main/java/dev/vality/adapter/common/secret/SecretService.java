@@ -25,7 +25,7 @@ public interface SecretService {
      * Возвращает конкретный секрет из kv
      * @param secretRef Идентификатор секрета, например, SecretRef{'tinkoff-merchant-882347345', 'PASSWORD'}
      * @return Возвращает секрет
-     * @throws NotFoundException
+     * @throws NotFoundException если ключ не найден
      */
     SecretValue getSecret(SecretRef secretRef) throws NotFoundException;
 
