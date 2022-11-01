@@ -19,7 +19,7 @@ public interface SecretService {
      * @return - kv всех секретов этого терминала, например {'TERMINAL_ID':'user11', 'PASSWORD':'Parolec1'}
      * @throws NotFoundException если ключ не найден
      */
-    Map<String, String> getSecrets(String optionsId) throws NotFoundException;
+    Map<String, SecretValue> getSecrets(String optionsId) throws NotFoundException;
 
     /**
      * Возвращает конкретный секрет из kv
@@ -27,7 +27,7 @@ public interface SecretService {
      * @return Возвращает секрет
      * @throws NotFoundException
      */
-    String getSecret(SecretRef secretRef) throws NotFoundException;
+    SecretValue getSecret(SecretRef secretRef) throws NotFoundException;
 
     /**
      * Возвращает hex-encoded hmac-подпись data
