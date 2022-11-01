@@ -17,7 +17,7 @@ public interface SecretService {
     /** Возвращает все секреты заданного optionsId (по смыслу терминала)
      * @param optionsId - Значение из options.get("OPTIONS_ID")
      * @return - kv всех секретов этого терминала, например {'TERMINAL_ID':'user11', 'PASSWORD':'Parolec1'}
-     * @throws NotFoundException
+     * @throws NotFoundException если ключ не найден
      */
     Map<String, String> getSecrets(String optionsId) throws NotFoundException;
 
@@ -35,7 +35,7 @@ public interface SecretService {
      * @param secretRef Идентификатор секрета, например, SecretRef{'tinkoff-merchant-882347345', 'PASSWORD'}
      * @param hmacAlgorithm Алгоритм подписи, например, HmacSHA256
      * @return Возвращает подпись
-     * @throws NotFoundException
+     * @throws NotFoundException если ключ не найден
      */
     String hmac(String data, SecretRef secretRef, HmacAlgorithms hmacAlgorithm) throws NotFoundException;
 
@@ -45,7 +45,7 @@ public interface SecretService {
      * @param secretRef Идентификатор секрета, например, SecretRef{'tinkoff-merchant-882347345', 'PASSWORD'}
      * @param digestAlgorithm Алгоритм хэширования, например, MD5
      * @return Возвращает подпись
-     * @throws NotFoundException
+     * @throws NotFoundException если ключ не найден
      */
     String digest(String data, SecretRef secretRef, DigestAlgorithms digestAlgorithm) throws NotFoundException;
 
