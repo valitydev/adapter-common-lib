@@ -1,5 +1,6 @@
 package dev.vality.adapter.common.secret;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
@@ -12,6 +13,7 @@ import lombok.ToString;
 
 @Data
 @ToString
+@AllArgsConstructor
 public class SecretRef {
     private String path;
     private String key;

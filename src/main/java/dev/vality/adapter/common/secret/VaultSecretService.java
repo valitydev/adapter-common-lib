@@ -19,11 +19,11 @@ public class VaultSecretService implements SecretService {
     public static final String VAULT_PATH = "VAULT_PATH";
 
     private final VaultTemplate vaultTemplate;
-    private static final String SECRET_PATH = "/secret/data/";
+    private static final String SECRET_PATH = "secret";
 
     @Override
     public Map<String, SecretValue> getSecrets(String path) throws SecretPathNotFoundException {
-        var map = vaultTemplate.read(SECRET_PATH + path);
+        var map = vaultTemplate.opsForVersionedKeyValue(SECRET_PATH).get(path);
         if (map == null || map.getData() == null) {
             throw new SecretPathNotFoundException(path);
         }
@@ -50,16 +50,16 @@ public class VaultSecretService implements SecretService {
     }
 
     @Override
-    public String digest(String data, SecretRef secretRef, DigestAlgorithms digestAlgorithm) throws SecretNotFoundException {
+    public String digest(String data, SecretRef secretRef, DigestAlgorithms algorithm) throws SecretNotFoundException {
         String secret = getSecretString(secretRef);
-        return switch (digestAlgorithm) {
+        return switch (algorithm) {
             case MD5 -> DigestUtils.md5Hex(data + secret);
             case SHA256 -> DigestUtils.sha256Hex(data + secret);
         };
     }
 
     private String getSecretString(SecretRef secretRef) throws SecretNotFoundException {
-        var map = vaultTemplate.read(SECRET_PATH + secretRef.getPath());
+        var map = vaultTemplate.opsForVersionedKeyValue(SECRET_PATH).get(secretRef.getPath());
         if (map == null || map.getData() == null || map.getData().get(secretRef.getKey()) == null) {
             throw new SecretNotFoundException(secretRef.toString());
         }
