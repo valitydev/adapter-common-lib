@@ -57,7 +57,7 @@ public class VaultSecretServiceTest {
 
     @Test
     public void testHmac() {
-        String expected = HmacEncryption.calculateHMacSha256("some_data", "6d6b6c6172657772");
+        String expected = HmacEncryption.calculateHMacSha256("some_dat", "6d6b6c6172657772");
         SecretRef hmacRef = new SecretRef(TEST_PATH, HMAC_KEY);
         String actual = vaultService.hmac("some_dat", hmacRef, HmacAlgorithms.HMAC_SHA_256);
         assertEquals(expected, actual);
