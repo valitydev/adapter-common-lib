@@ -5,7 +5,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.HmacUtils;
 
-public class HmacSigner {
+class HmacSigner {
     public String sign(String data, String hexSecret, SecretRef secretRef, HmacAlgorithms hmacAlgorithm)
             throws HexDecodeException {
         try {
