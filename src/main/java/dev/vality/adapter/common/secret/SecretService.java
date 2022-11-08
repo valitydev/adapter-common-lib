@@ -1,5 +1,6 @@
 package dev.vality.adapter.common.secret;
 
+import dev.vality.adapter.common.exception.HexDecodeException;
 import dev.vality.adapter.common.exception.SecretNotFoundException;
 import dev.vality.adapter.common.exception.SecretPathNotFoundException;
 
@@ -23,14 +24,16 @@ public interface SecretService {
     SecretValue getSecret(SecretRef secretRef) throws SecretNotFoundException;
 
     /**
-     * Возвращает hex-encoded hmac-подпись data
+     * Возвращает hex-encoded hmac-подпись data. Секрет должен быть hex-encoded.
      * @param data Данные для подписи, например, invoiceId=123&amount=222
      * @param secretRef Идентификатор секрета, например, SecretRef{'tinkoff-merchant-882347345', 'PASSWORD'}
      * @param hmacAlgorithm Алгоритм подписи, например, HmacSHA256
      * @return Возвращает подпись
      * @throws SecretNotFoundException если секрет не найден
+     * @throws HexDecodeException если секрет не в hex-формате
      */
-    String hmac(String data, SecretRef secretRef, HmacAlgorithms hmacAlgorithm) throws SecretNotFoundException;
+    String hmac(String data, SecretRef secretRef, HmacAlgorithms hmacAlgorithm)
+            throws SecretNotFoundException, HexDecodeException;
 
     /**
      * Возвращает hex-encoded хэш от data + secret

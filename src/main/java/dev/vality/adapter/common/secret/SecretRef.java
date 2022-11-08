@@ -1,6 +1,8 @@
 package dev.vality.adapter.common.secret;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * Идентификатор секрета в vault
@@ -10,6 +12,8 @@ import lombok.Data;
  */
 
 @Data
+@ToString
+@AllArgsConstructor
 public class SecretRef {
     private String path;
     private String key;
