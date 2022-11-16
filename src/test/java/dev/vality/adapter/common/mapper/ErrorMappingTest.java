@@ -22,9 +22,15 @@ public class ErrorMappingTest {
         error1.setDescriptionRegex("Invalid Merchant Name");
         var errorMapping = new ErrorMapping("'%s' - '%s'", List.of(error, error1));
         assertThrows(WRuntimeException.class, () -> errorMapping.mapFailure("unknown"));
+        assertThrows(WRuntimeException.class, () -> errorMapping.mapFailure("00001"));
+
+        var error2 = new Error();
+        error2.setMapping("authorization_failed:insufficient_funds");
+        error2.setCodeRegex("00001");
+        var errorMappingFull = new ErrorMapping("'%s' - '%s'", List.of(error, error1, error2));
         assertEquals(
-                "Failure(code:authorization_failed, reason:'00001' - 'null', sub:SubFailure(code:unknown))",
-                errorMapping.mapFailure("00001").toString());
+                "Failure(code:authorization_failed, reason:'00001' - 'null', sub:SubFailure(code:insufficient_funds))",
+                errorMappingFull.mapFailure("00001").toString());
     }
 
     @Test
