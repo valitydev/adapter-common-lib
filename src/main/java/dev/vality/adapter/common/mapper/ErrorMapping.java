@@ -89,9 +89,10 @@ public class ErrorMapping {
     }
 
     private boolean matchNullableStrings(String str, String regex) {
-        if (str == null || regex == null) {
+        if (regex == null) {
             return true;
         }
+        str = Objects.requireNonNullElse(str, "");
         return str.matches(regex);
     }
 
