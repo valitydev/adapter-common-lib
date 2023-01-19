@@ -12,14 +12,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VaultSecretService implements SecretService {
 
-    public static final String VAULT_PATH = "VAULT_PATH";
-    private static final String SECRET_PATH = "secret";
-
     private final VaultTemplate vaultTemplate;
 
     @Override
-    public Map<String, SecretValue> getSecrets(String path) throws SecretPathNotFoundException {
-        var map = vaultTemplate.opsForVersionedKeyValue(SECRET_PATH).get(path);
+    public Map<String, SecretValue> getSecrets(String serviceName, String path) throws SecretPathNotFoundException {
+        var map = vaultTemplate.opsForVersionedKeyValue(serviceName).get(path);
         if (map == null || map.getData() == null) {
             throw new SecretPathNotFoundException(path);
         }
@@ -28,26 +25,27 @@ public class VaultSecretService implements SecretService {
     }
 
     @Override
-    public SecretValue getSecret(SecretRef secretRef) throws SecretNotFoundException {
-        String secret = getSecretString(secretRef);
+    public SecretValue getSecret(String serviceName, SecretRef secretRef) throws SecretNotFoundException {
+        String secret = getSecretString(serviceName, secretRef);
         return new SecretValue(secret);
     }
 
     @Override
-    public String hmac(String data, SecretRef secretRef, HmacAlgorithms hmacAlgorithm)
+    public String hmac(String serviceName, String data, SecretRef secretRef, HmacAlgorithms hmacAlgorithm)
             throws SecretNotFoundException, HexDecodeException {
-        String hexSecret = getSecretString(secretRef);
+        String hexSecret = getSecretString(serviceName, secretRef);
         return new HmacSigner().sign(data, hexSecret, secretRef, hmacAlgorithm);
     }
 
     @Override
-    public String digest(String data, SecretRef secretRef, DigestAlgorithms algorithm) throws SecretNotFoundException {
-        String secret = getSecretString(secretRef);
+    public String digest(String serviceName, String data, SecretRef secretRef, DigestAlgorithms algorithm)
+            throws SecretNotFoundException {
+        String secret = getSecretString(serviceName, secretRef);
         return new DigestSigner().sign(data, secret, algorithm);
     }
 
-    private String getSecretString(SecretRef secretRef) throws SecretNotFoundException {
-        var map = vaultTemplate.opsForVersionedKeyValue(SECRET_PATH).get(secretRef.getPath());
+    private String getSecretString(String serviceName, SecretRef secretRef) throws SecretNotFoundException {
+        var map = vaultTemplate.opsForVersionedKeyValue(serviceName).get(secretRef.getPath());
         if (map == null || map.getData() == null || map.getData().get(secretRef.getKey()) == null) {
             throw new SecretNotFoundException(secretRef.toString());
         }

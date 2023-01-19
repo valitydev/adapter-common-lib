@@ -23,6 +23,7 @@ public class VaultSecretServiceTest {
     public static final String SIMPLE_SECRET = "sbdhfvh2y32bub";
     public static final String HMAC_KEY = "hmacKey";
     public static final String HMAC_SECRET = "6d6b6c6172657772";
+    public static final String SERVICE_NAME = "secret";
     private static VaultSecretService vaultService;
 
     private static final String TEST_PATH = "test-terminal-123";
@@ -35,40 +36,43 @@ public class VaultSecretServiceTest {
         VaultEndpoint vaultEndpoint = VaultEndpoint.create("localhost", container.getFirstMappedPort());
         vaultEndpoint.setScheme("http");
         VaultTemplate vaultTemplate = new VaultTemplate(vaultEndpoint, new TokenAuthentication("my-root-token"));
-        vaultTemplate.opsForVersionedKeyValue("secret").put(TEST_PATH,
+        vaultTemplate.opsForVersionedKeyValue(SERVICE_NAME).put(TEST_PATH,
                 Map.of(SIMPLE_KEY, SIMPLE_SECRET,
-                HMAC_KEY, HMAC_SECRET
-        ));
+                        HMAC_KEY, HMAC_SECRET
+                ));
         vaultService = new VaultSecretService(vaultTemplate);
-
     }
 
     @Test
     public void testGetSecrets() {
-        assertNotNull(vaultService.getSecrets(TEST_PATH));
-        assertThrows(SecretPathNotFoundException.class, () -> vaultService.getSecrets("kekek"));
+        assertNotNull(vaultService.getSecrets(SERVICE_NAME, TEST_PATH));
+        assertThrows(SecretPathNotFoundException.class, () -> vaultService.getSecrets(SERVICE_NAME, "kekek"));
     }
 
     @Test
     public void testGetSecret() {
-        assertEquals(SIMPLE_SECRET, vaultService.getSecret(new SecretRef(TEST_PATH, SIMPLE_KEY)).getValue());
-        assertThrows(SecretNotFoundException.class, () -> vaultService.getSecret(new SecretRef(TEST_PATH, "der")));
+        assertEquals(SIMPLE_SECRET,
+                vaultService.getSecret(SERVICE_NAME, new SecretRef(TEST_PATH, SIMPLE_KEY)).getValue());
+        assertThrows(SecretNotFoundException.class,
+                () -> vaultService.getSecret(SERVICE_NAME, new SecretRef(TEST_PATH, "der")));
     }
 
     @Test
     public void testHmac() {
         String expected = HmacEncryption.calculateHMacSha256("some_dat", "6d6b6c6172657772");
         SecretRef hmacRef = new SecretRef(TEST_PATH, HMAC_KEY);
-        String actual = vaultService.hmac("some_dat", hmacRef, HmacAlgorithms.HMAC_SHA_256);
+        String actual = vaultService.hmac(SERVICE_NAME, "some_dat", hmacRef, HmacAlgorithms.HMAC_SHA_256);
         assertEquals(expected, actual);
         assertThrows(HexDecodeException.class,
-                () -> vaultService.hmac("some_dat", new SecretRef(TEST_PATH,SIMPLE_KEY), HmacAlgorithms.HMAC_MD5));
+                () -> vaultService.hmac(SERVICE_NAME, "some_dat", new SecretRef(TEST_PATH, SIMPLE_KEY),
+                        HmacAlgorithms.HMAC_MD5));
     }
 
     @Test
     public void digest() {
         String expected = DigestUtils.md5Hex("some_da" + SIMPLE_SECRET);
-        String actual = vaultService.digest("some_da", new SecretRef(TEST_PATH, SIMPLE_KEY), DigestAlgorithms.MD5);
+        String actual = vaultService.digest(SERVICE_NAME, "some_da", new SecretRef(TEST_PATH, SIMPLE_KEY),
+                DigestAlgorithms.MD5);
         assertEquals(expected, actual);
     }
 }
