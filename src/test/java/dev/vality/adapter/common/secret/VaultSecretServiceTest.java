@@ -13,6 +13,7 @@ import org.springframework.vault.core.VaultTemplate;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.vault.VaultContainer;
 
+import java.io.IOException;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,16 +24,18 @@ public class VaultSecretServiceTest {
     public static final String SIMPLE_SECRET = "sbdhfvh2y32bub";
     public static final String HMAC_KEY = "hmacKey";
     public static final String HMAC_SECRET = "6d6b6c6172657772";
-    public static final String SERVICE_NAME = "secret";
+    public static final String SERVICE_NAME = "service-xxx";
     private static VaultSecretService vaultService;
 
     private static final String TEST_PATH = "test-terminal-123";
 
     @BeforeAll
-    public static void setUp() {
+    public static void setUp() throws IOException, InterruptedException {
         VaultContainer<?> container = new VaultContainer<>(DockerImageName.parse("vault:1.1.3"))
                 .withVaultToken("my-root-token");
         container.start();
+        container.execInContainer("vault", "secrets", "enable", SERVICE_NAME);
+
         VaultEndpoint vaultEndpoint = VaultEndpoint.create("localhost", container.getFirstMappedPort());
         vaultEndpoint.setScheme("http");
         VaultTemplate vaultTemplate = new VaultTemplate(vaultEndpoint, new TokenAuthentication("my-root-token"));
