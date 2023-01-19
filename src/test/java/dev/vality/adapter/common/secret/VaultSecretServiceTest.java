@@ -23,7 +23,7 @@ public class VaultSecretServiceTest {
     public static final String SIMPLE_SECRET = "sbdhfvh2y32bub";
     public static final String HMAC_KEY = "hmacKey";
     public static final String HMAC_SECRET = "6d6b6c6172657772";
-    public static final String SERVICE_NAME = "service-xxx";
+    public static final String SERVICE_NAME = "secret";
     private static VaultSecretService vaultService;
 
     private static final String TEST_PATH = "test-terminal-123";
