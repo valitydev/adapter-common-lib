@@ -133,11 +133,12 @@ public class ErrorMapping {
     }
 
     private WRuntimeException getUnexpectedError(String code, String description, String state) {
+        String errorMessage = String.format("Unexpected result, code = %s, description = %s, state = %s",
+                code, description, state);
+
         var errorDefinition = new WErrorDefinition(WErrorSource.INTERNAL);
         errorDefinition.setErrorType(WErrorType.UNEXPECTED_ERROR);
-        return new WRuntimeException(
-                String.format("Unexpected result, code = %s, description = %s, state = %s",
-                        code, description, state),
-                errorDefinition);
+        errorDefinition.setErrorReason(errorMessage);
+        return new WRuntimeException(errorMessage, errorDefinition);
     }
 }
