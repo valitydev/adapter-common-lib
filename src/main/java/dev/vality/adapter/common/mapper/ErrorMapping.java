@@ -135,21 +135,16 @@ public class ErrorMapping {
     private WRuntimeException getUnexpectedError(String code, String description, String state) {
         var errorMessage = String.format("Unexpected result, code = %s, description = %s, state = %s",
                 code, description, state);
-        return new WRuntimeException(errorMessage, createErrDef(errorMessage, null));
+        return new WRuntimeException(errorMessage, createWRuntimeExceptionErrDef(errorMessage));
     }
 
-    private WErrorDefinition createErrDef(String reason, Throwable cause) {
+    private WErrorDefinition createWRuntimeExceptionErrDef(String reason) {
         WErrorDefinition errorDefinition = new WErrorDefinition(WErrorSource.INTERNAL);
         errorDefinition.setErrorType(WErrorType.UNEXPECTED_ERROR);
         errorDefinition.setErrorSource(WErrorSource.INTERNAL);
         errorDefinition.setErrorReason(reason);
-        if (cause != null) {
-            errorDefinition.setErrorName(cause.getClass().getSimpleName());
-            errorDefinition.setErrorMessage(cause.getMessage());
-        } else {
-            errorDefinition.setErrorName(WRuntimeException.class.getSimpleName());
-            errorDefinition.setErrorMessage(reason);
-        }
+        errorDefinition.setErrorName(WRuntimeException.class.getSimpleName());
+        errorDefinition.setErrorMessage(reason);
         return errorDefinition;
     }
 }
