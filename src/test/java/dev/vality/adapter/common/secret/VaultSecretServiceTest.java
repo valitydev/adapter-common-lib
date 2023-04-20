@@ -98,7 +98,13 @@ public class VaultSecretServiceTest {
 
     @Test
     void writeMultipleSecret() {
-        SecretObj secretObj = new SecretObj(TEST_PATH, Map.of(TOKEN, TOKEN_VALUE, TOKEN_EXP_DATE, TOKEN_EXP_DATE_VALUE));
+        SecretObj secretObj = new SecretObj(
+                TEST_PATH,
+                Map.of(
+                        TOKEN, TOKEN_VALUE,
+                        TOKEN_EXP_DATE, TOKEN_EXP_DATE_VALUE
+                )
+        );
         vaultService.writeSecret(SERVICE_NAME, secretObj);
 
         Map<String, SecretValue> secret = vaultService.getSecrets(SERVICE_NAME, TEST_PATH);
