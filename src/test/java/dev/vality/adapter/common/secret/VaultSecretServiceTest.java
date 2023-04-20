@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.vault.authentication.TokenAuthentication;
 import org.springframework.vault.client.VaultEndpoint;
 import org.springframework.vault.core.VaultTemplate;
-import org.testcontainers.containers.Container;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.vault.VaultContainer;
 import org.testcontainers.vault.VaultLogLevel;
@@ -27,6 +26,10 @@ public class VaultSecretServiceTest {
     public static final String HMAC_KEY = "hmacKey";
     public static final String HMAC_SECRET = "6d6b6c6172657772";
     public static final String SERVICE_NAME = "adapter-vtb";
+    public static final String TOKEN = "token";
+    public static final String TOKEN_VALUE = "token-value";
+    public static final String TOKEN_EXP_DATE = "token_exp_date";
+    public static final String TOKEN_EXP_DATE_VALUE = "2023-04-20T12:26:17.191286";
     private static VaultSecretService vaultService;
 
     private static final String TEST_PATH = "test-terminal-123";
@@ -49,13 +52,13 @@ public class VaultSecretServiceTest {
     }
 
     @Test
-    public void testGetSecrets() {
+    void testGetSecrets() {
         assertNotNull(vaultService.getSecrets(SERVICE_NAME, TEST_PATH));
         assertThrows(SecretPathNotFoundException.class, () -> vaultService.getSecrets(SERVICE_NAME, "kekek"));
     }
 
     @Test
-    public void testGetSecret() {
+    void testGetSecret() {
         assertEquals(SIMPLE_SECRET,
                 vaultService.getSecret(SERVICE_NAME, new SecretRef(TEST_PATH, SIMPLE_KEY)).getValue());
         assertThrows(SecretNotFoundException.class,
@@ -63,7 +66,7 @@ public class VaultSecretServiceTest {
     }
 
     @Test
-    public void testHmac() {
+    void testHmac() {
         String expected = HmacEncryption.calculateHMacSha256("some_dat", "6d6b6c6172657772");
         SecretRef hmacRef = new SecretRef(TEST_PATH, HMAC_KEY);
         String actual = vaultService.hmac(SERVICE_NAME, "some_dat", hmacRef, HmacAlgorithms.HMAC_SHA_256);
@@ -74,10 +77,35 @@ public class VaultSecretServiceTest {
     }
 
     @Test
-    public void digest() {
+    void digest() {
         String expected = DigestUtils.md5Hex("some_da" + SIMPLE_SECRET);
         String actual = vaultService.digest(SERVICE_NAME, "some_da", new SecretRef(TEST_PATH, SIMPLE_KEY),
                 DigestAlgorithms.MD5);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void writeSingleSecret() {
+        SecretObj secretObj = new SecretObj(TEST_PATH, Map.of(TOKEN, TOKEN_VALUE));
+        vaultService.writeSecret(SERVICE_NAME, secretObj);
+
+        SecretValue secret = vaultService.getSecret(SERVICE_NAME, new SecretRef(TEST_PATH, TOKEN));
+
+        assertNotNull(secret);
+        assertEquals(TOKEN_VALUE, secret.getValue());
+
+    }
+
+    @Test
+    void writeMultipleSecret() {
+        SecretObj secretObj = new SecretObj(TEST_PATH, Map.of(TOKEN, TOKEN_VALUE, TOKEN_EXP_DATE, TOKEN_EXP_DATE_VALUE));
+        vaultService.writeSecret(SERVICE_NAME, secretObj);
+
+        Map<String, SecretValue> secret = vaultService.getSecrets(SERVICE_NAME, TEST_PATH);
+
+        assertNotNull(secret);
+        assertEquals(TOKEN_VALUE, secret.get(TOKEN).getValue());
+        assertEquals(TOKEN_EXP_DATE_VALUE, secret.get(TOKEN_EXP_DATE).getValue());
+
     }
 }

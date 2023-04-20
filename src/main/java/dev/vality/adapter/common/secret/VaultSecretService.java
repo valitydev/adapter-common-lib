@@ -44,6 +44,11 @@ public class VaultSecretService implements SecretService {
         return new DigestSigner().sign(data, secret, algorithm);
     }
 
+    @Override
+    public void writeSecret(String serviceName, SecretObj secretObj) {
+        vaultTemplate.opsForVersionedKeyValue(serviceName).put(secretObj.getPath(), secretObj.getValues());
+    }
+
     private String getSecretString(String serviceName, SecretRef secretRef) throws SecretNotFoundException {
         var map = vaultTemplate.opsForVersionedKeyValue(serviceName).get(secretRef.getPath());
         if (map == null || map.getData() == null || map.getData().get(secretRef.getKey()) == null) {
