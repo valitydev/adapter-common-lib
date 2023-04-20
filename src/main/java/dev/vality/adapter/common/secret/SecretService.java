@@ -55,4 +55,12 @@ public interface SecretService {
     String digest(String serviceName, String data, SecretRef secretRef, DigestAlgorithms digestAlgorithm)
             throws SecretNotFoundException;
 
+    /**
+     * Сохраняет секреты для терминала
+     *
+     * @param serviceName - имя сервиса, для которого сохраняются секреты. Хранится в настройках сервиса.
+     * @param secretObj   - объект с секретами, {@link SecretObj}
+     */
+    void writeSecret(String serviceName, SecretObj secretObj);
+
 }
