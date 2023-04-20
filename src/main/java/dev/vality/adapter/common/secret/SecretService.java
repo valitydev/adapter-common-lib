@@ -56,10 +56,10 @@ public interface SecretService {
             throws SecretNotFoundException;
 
     /**
-     * Сохраняет секрет для терминала
+     * Сохраняет секреты для терминала
      *
-     * @param serviceName - имя сервиса, для которого сохраняется секрет. Хранится в настройках сервиса.
-     * @param secretObj   объект с секретами, {@link SecretObj}
+     * @param serviceName - имя сервиса, для которого сохраняются секреты. Хранится в настройках сервиса.
+     * @param secretObj   - объект с секретами, {@link SecretObj}
      */
     void writeSecret(String serviceName, SecretObj secretObj);
 
