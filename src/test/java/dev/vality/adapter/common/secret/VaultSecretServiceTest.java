@@ -33,6 +33,7 @@ public class VaultSecretServiceTest {
     private static VaultSecretService vaultService;
 
     private static final String TEST_PATH = "test-terminal-123";
+    private static final String TEST_TOKEN_PATH = "test-terminal-345";
 
     @BeforeAll
     public static void setUp() throws IOException, InterruptedException {
@@ -86,10 +87,10 @@ public class VaultSecretServiceTest {
 
     @Test
     void writeSingleSecret() {
-        SecretObj secretObj = new SecretObj(TEST_PATH, Map.of(TOKEN, TOKEN_VALUE));
+        SecretObj secretObj = new SecretObj(TEST_TOKEN_PATH, Map.of(TOKEN, TOKEN_VALUE));
         vaultService.writeSecret(SERVICE_NAME, secretObj);
 
-        SecretValue secret = vaultService.getSecret(SERVICE_NAME, new SecretRef(TEST_PATH, TOKEN));
+        SecretValue secret = vaultService.getSecret(SERVICE_NAME, new SecretRef(TEST_TOKEN_PATH, TOKEN));
 
         assertNotNull(secret);
         assertEquals(TOKEN_VALUE, secret.getValue());
@@ -99,7 +100,7 @@ public class VaultSecretServiceTest {
     @Test
     void writeMultipleSecret() {
         SecretObj secretObj = new SecretObj(
-                TEST_PATH,
+                TEST_TOKEN_PATH,
                 Map.of(
                         TOKEN, TOKEN_VALUE,
                         TOKEN_EXP_DATE, TOKEN_EXP_DATE_VALUE
@@ -107,7 +108,7 @@ public class VaultSecretServiceTest {
         );
         vaultService.writeSecret(SERVICE_NAME, secretObj);
 
-        Map<String, SecretValue> secret = vaultService.getSecrets(SERVICE_NAME, TEST_PATH);
+        Map<String, SecretValue> secret = vaultService.getSecrets(SERVICE_NAME, TEST_TOKEN_PATH);
 
         assertNotNull(secret);
         assertEquals(TOKEN_VALUE, secret.get(TOKEN).getValue());
