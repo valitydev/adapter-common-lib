@@ -24,12 +24,7 @@ public interface SecretService {
      *
      * @param serviceName - имя сервиса, которому принадлежат секреты. Хранится в настройках сервиса.
      * @param path        - путь, по которому в vault хранятся секреты одного терминала. Хранится в options платежа.
-     * @return - kv всех секретов этого терминала вместе с версией хранаилища,
-     * например,
-     * {
-     * {'TERMINAL_ID':'user11', 'PASSWORD':'Parolec1'},
-     * 42
-     * }
+     * @return - kv всех секретов этого терминала и версию хранаилища, например, {{'key':'key11', 'pass':'pass'},42}
      * @throws SecretsNotFoundException если путь не найден или значения пустые
      */
     VersionedSecret getVersionSecrets(String serviceName, String path) throws SecretsNotFoundException;
