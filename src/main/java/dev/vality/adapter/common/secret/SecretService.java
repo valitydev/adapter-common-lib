@@ -3,6 +3,7 @@ package dev.vality.adapter.common.secret;
 import dev.vality.adapter.common.exception.HexDecodeException;
 import dev.vality.adapter.common.exception.SecretNotFoundException;
 import dev.vality.adapter.common.exception.SecretPathNotFoundException;
+import dev.vality.adapter.common.exception.SecretsNotFoundException;
 
 import java.util.Map;
 
@@ -23,10 +24,15 @@ public interface SecretService {
      *
      * @param serviceName - имя сервиса, которому принадлежат секреты. Хранится в настройках сервиса.
      * @param path        - путь, по которому в vault хранятся секреты одного терминала. Хранится в options платежа.
-     * @return - kv всех секретов этого терминала, например {'TERMINAL_ID':'user11', 'PASSWORD':'Parolec1'}
-     * @throws SecretPathNotFoundException если путь не найден
+     * @return - kv всех секретов этого терминала вместе с версией хранаилища,
+     * например,
+     * {
+     * {'TERMINAL_ID':'user11', 'PASSWORD':'Parolec1'},
+     * 42
+     * }
+     * @throws SecretsNotFoundException если путь не найден или значения пустые
      */
-    VersionedSecret getVersionSecrets(String serviceName, String path) throws SecretPathNotFoundException;
+    VersionedSecret getVersionSecrets(String serviceName, String path) throws SecretsNotFoundException;
 
     /**
      * Возвращает конкретный секрет из kv
