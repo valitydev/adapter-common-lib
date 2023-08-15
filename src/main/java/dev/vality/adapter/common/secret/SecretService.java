@@ -74,4 +74,13 @@ public interface SecretService {
      */
     void writeSecret(String serviceName, SecretObj secretObj);
 
+    /**
+     * Сохраняет секреты для терминала
+     *
+     * @param serviceName - имя сервиса, для которого сохраняются секреты. Хранится в настройках сервиса.
+     * @param secretObj   - объект с секретами, {@link SecretObj}
+     * @return Возвращает версию созданного хранилища для терминала
+     */
+    Integer writeVersionSecret(String serviceName, SecretObj secretObj);
+
 }

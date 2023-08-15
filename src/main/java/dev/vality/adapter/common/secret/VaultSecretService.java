@@ -70,6 +70,13 @@ public class VaultSecretService implements SecretService {
         vaultTemplate.opsForVersionedKeyValue(serviceName).put(secretObj.getPath(), secretObj.getValues());
     }
 
+    @Override
+    public Integer writeVersionSecret(String serviceName, SecretObj secretObj) {
+        Versioned.Metadata metadata =
+                vaultTemplate.opsForVersionedKeyValue(serviceName).put(secretObj.getPath(), secretObj.getValues());
+        return metadata.getVersion().getVersion();
+    }
+
     private String getSecretString(String serviceName, SecretRef secretRef) throws SecretNotFoundException {
         var map = vaultTemplate.opsForVersionedKeyValue(serviceName).get(secretRef.getPath());
         if (map == null || map.getData() == null || map.getData().get(secretRef.getKey()) == null) {
