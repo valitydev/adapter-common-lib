@@ -3,8 +3,12 @@ package dev.vality.adapter.common.secret;
 import dev.vality.adapter.common.exception.HexDecodeException;
 import dev.vality.adapter.common.exception.SecretNotFoundException;
 import dev.vality.adapter.common.exception.SecretPathNotFoundException;
+import dev.vality.adapter.common.exception.SecretsNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.vault.core.VaultTemplate;
+import org.springframework.vault.support.Versioned;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,6 +26,23 @@ public class VaultSecretService implements SecretService {
         }
         return map.getData().entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> new SecretValue(e.getValue().toString())));
+    }
+
+    @Override
+    public VersionedSecret getVersionSecrets(String serviceName, String path) throws SecretPathNotFoundException {
+        var map = vaultTemplate.opsForVersionedKeyValue(serviceName).get(path);
+        if (map == null || !map.hasData() || CollectionUtils.isEmpty(map.getData()) || isEmptyValues(map)) {
+            throw new SecretsNotFoundException("Secrets doesn't exist or empty for path %s".formatted(path));
+        }
+
+        Map<String, SecretValue> secretes = map.getData().entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> new SecretValue(e.getValue().toString())));
+        return new VersionedSecret(secretes, map.getVersion().getVersion());
+    }
+
+    private boolean isEmptyValues(Versioned<Map<String, Object>> map) {
+        return map.getData().values().stream()
+                .noneMatch(o -> StringUtils.hasText(o.toString()));
     }
 
     @Override

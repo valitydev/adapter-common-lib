@@ -19,6 +19,16 @@ public interface SecretService {
     Map<String, SecretValue> getSecrets(String serviceName, String path) throws SecretPathNotFoundException;
 
     /**
+     * Возвращает все секреты по заданному пути (по смыслу терминала) с версией хранилища
+     *
+     * @param serviceName - имя сервиса, которому принадлежат секреты. Хранится в настройках сервиса.
+     * @param path        - путь, по которому в vault хранятся секреты одного терминала. Хранится в options платежа.
+     * @return - kv всех секретов этого терминала, например {'TERMINAL_ID':'user11', 'PASSWORD':'Parolec1'}
+     * @throws SecretPathNotFoundException если путь не найден
+     */
+    VersionedSecret getVersionSecrets(String serviceName, String path) throws SecretPathNotFoundException;
+
+    /**
      * Возвращает конкретный секрет из kv
      *
      * @param serviceName - имя сервиса, которому принадлежат секреты. Хранится в настройках сервиса.

@@ -3,10 +3,12 @@ package dev.vality.adapter.common.secret;
 import dev.vality.adapter.common.exception.HexDecodeException;
 import dev.vality.adapter.common.exception.SecretNotFoundException;
 import dev.vality.adapter.common.exception.SecretPathNotFoundException;
+import dev.vality.adapter.common.exception.SecretsNotFoundException;
 import dev.vality.adapter.common.utils.HmacEncryption;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.CollectionUtils;
 import org.springframework.vault.authentication.TokenAuthentication;
 import org.springframework.vault.client.VaultEndpoint;
 import org.springframework.vault.core.VaultTemplate;
@@ -34,6 +36,7 @@ public class VaultSecretServiceTest {
 
     private static final String TEST_PATH = "test-terminal-123";
     private static final String TEST_TOKEN_PATH = "test-terminal-345";
+    private static final String TEST_EMPTY_PATH = "test-terminal-765";
 
     @BeforeAll
     public static void setUp() throws IOException, InterruptedException {
@@ -49,6 +52,10 @@ public class VaultSecretServiceTest {
                 Map.of(SIMPLE_KEY, SIMPLE_SECRET,
                         HMAC_KEY, HMAC_SECRET
                 ));
+        vaultTemplate.opsForVersionedKeyValue(SERVICE_NAME).put(TEST_EMPTY_PATH,
+                Map.of(SIMPLE_KEY, "",
+                        HMAC_KEY, ""
+                ));
         vaultService = new VaultSecretService(vaultTemplate);
     }
 
@@ -56,6 +63,28 @@ public class VaultSecretServiceTest {
     void testGetSecrets() {
         assertNotNull(vaultService.getSecrets(SERVICE_NAME, TEST_PATH));
         assertThrows(SecretPathNotFoundException.class, () -> vaultService.getSecrets(SERVICE_NAME, "kekek"));
+    }
+
+    @Test
+    void testGetVersionSecretsWithEmptyValues() {
+        assertThrows(SecretsNotFoundException.class,
+                () -> vaultService.getVersionSecrets(SERVICE_NAME, TEST_EMPTY_PATH));
+    }
+
+    @Test
+    void testGetVersionSecretsWithNotExistPath() {
+        assertThrows(SecretsNotFoundException.class,
+                () -> vaultService.getVersionSecrets(SERVICE_NAME, "kekek"));
+    }
+
+    @Test
+    void testGetVersionSecrets() {
+        VersionedSecret versionSecrets = vaultService.getVersionSecrets(SERVICE_NAME, TEST_PATH);
+
+        assertFalse(CollectionUtils.isEmpty(versionSecrets.getSecretes()));
+
+        assertNotNull(versionSecrets.getVersion());
+        assertEquals(1, versionSecrets.getVersion());
     }
 
     @Test
