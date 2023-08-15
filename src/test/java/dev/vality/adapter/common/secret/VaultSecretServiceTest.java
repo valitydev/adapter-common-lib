@@ -144,4 +144,23 @@ public class VaultSecretServiceTest {
         assertEquals(TOKEN_EXP_DATE_VALUE, secret.get(TOKEN_EXP_DATE).getValue());
 
     }
+
+    @Test
+    void writeMultipleVersionSecret() {
+        SecretObj secretObj = new SecretObj(
+                TEST_TOKEN_PATH,
+                Map.of(
+                        TOKEN, TOKEN_VALUE,
+                        TOKEN_EXP_DATE, TOKEN_EXP_DATE_VALUE
+                )
+        );
+        Integer version = vaultService.writeVersionSecret(SERVICE_NAME, secretObj);
+
+        VersionedSecret versionSecrets = vaultService.getVersionSecrets(SERVICE_NAME, TEST_TOKEN_PATH);
+
+        assertNotNull(versionSecrets);
+        assertEquals(version, versionSecrets.getVersion());
+        assertEquals(TOKEN_VALUE, versionSecrets.getSecretes().get(TOKEN).getValue());
+        assertEquals(TOKEN_EXP_DATE_VALUE, versionSecrets.getSecretes().get(TOKEN_EXP_DATE).getValue());
+    }
 }
