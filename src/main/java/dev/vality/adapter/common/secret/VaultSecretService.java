@@ -9,7 +9,10 @@ import org.springframework.vault.core.VaultTemplate;
 import org.springframework.vault.support.Versioned;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static dev.vality.adapter.common.exception.SecretAlreadyModifyException.CAS_ERROR_MESSAGE;
 
 @RequiredArgsConstructor
 public class VaultSecretService implements SecretService {
@@ -82,8 +85,15 @@ public class VaultSecretService implements SecretService {
             var metadata = vaultTemplate.opsForVersionedKeyValue(serviceName).put(secretObj.getPath(), versionedBody);
             return metadata.getVersion().getVersion();
         } catch (VaultException e) {
-            throw new SecretAlreadyModifyException(e);
+            if (isCasError(e)) {
+                throw new SecretAlreadyModifyException(e);
+            }
+            throw e;
         }
+    }
+
+    private static boolean isCasError(VaultException e) {
+        return Objects.nonNull(e.getMessage()) && e.getMessage().contains(CAS_ERROR_MESSAGE);
     }
 
     private String getSecretString(String serviceName, SecretRef secretRef) throws SecretNotFoundException {
