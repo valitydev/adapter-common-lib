@@ -1,12 +1,10 @@
 package dev.vality.adapter.common.secret;
 
-import dev.vality.adapter.common.exception.HexDecodeException;
-import dev.vality.adapter.common.exception.SecretNotFoundException;
-import dev.vality.adapter.common.exception.SecretPathNotFoundException;
-import dev.vality.adapter.common.exception.SecretsNotFoundException;
+import dev.vality.adapter.common.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.vault.VaultException;
 import org.springframework.vault.core.VaultTemplate;
 import org.springframework.vault.support.Versioned;
 
@@ -75,6 +73,17 @@ public class VaultSecretService implements SecretService {
         Versioned.Metadata metadata =
                 vaultTemplate.opsForVersionedKeyValue(serviceName).put(secretObj.getPath(), secretObj.getValues());
         return metadata.getVersion().getVersion();
+    }
+
+    @Override
+    public Integer writeWithCas(String serviceName, SecretObj secretObj, Integer version) {
+        try {
+            var versionedBody = Versioned.create(secretObj.getValues(), Versioned.Version.from(version));
+            var metadata = vaultTemplate.opsForVersionedKeyValue(serviceName).put(secretObj.getPath(), versionedBody);
+            return metadata.getVersion().getVersion();
+        } catch (VaultException e) {
+            throw new SecretAlreadyModifyException(e);
+        }
     }
 
     private String getSecretString(String serviceName, SecretRef secretRef) throws SecretNotFoundException {

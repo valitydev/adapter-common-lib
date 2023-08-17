@@ -1,9 +1,6 @@
 package dev.vality.adapter.common.secret;
 
-import dev.vality.adapter.common.exception.HexDecodeException;
-import dev.vality.adapter.common.exception.SecretNotFoundException;
-import dev.vality.adapter.common.exception.SecretPathNotFoundException;
-import dev.vality.adapter.common.exception.SecretsNotFoundException;
+import dev.vality.adapter.common.exception.*;
 
 import java.util.Map;
 
@@ -82,5 +79,17 @@ public interface SecretService {
      * @return Возвращает версию созданного хранилища для терминала
      */
     Integer writeVersionSecret(String serviceName, SecretObj secretObj);
+
+    /**
+     * Сохраняет секреты для терминала, используя CAS (Check-And-Set)
+     *
+     * @param serviceName - имя сервиса, для которого сохраняются секреты. Хранится в настройках сервиса.
+     * @param secretObj   - объект с секретами, {@link SecretObj}
+     * @param version     - значение текущей версии секретов, которая требует обновления.
+     * @return Возвращает обновленную версию хранилища для терминала
+     * @throws SecretAlreadyModifyException в случае некорректной версии
+     */
+    Integer writeWithCas(String serviceName, SecretObj secretObj, Integer version)
+            throws SecretAlreadyModifyException;
 
 }
