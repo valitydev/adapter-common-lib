@@ -1,9 +1,6 @@
 package dev.vality.adapter.common.secret;
 
-import dev.vality.adapter.common.exception.HexDecodeException;
-import dev.vality.adapter.common.exception.SecretNotFoundException;
-import dev.vality.adapter.common.exception.SecretPathNotFoundException;
-import dev.vality.adapter.common.exception.SecretsNotFoundException;
+import dev.vality.adapter.common.exception.*;
 import dev.vality.adapter.common.utils.HmacEncryption;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.BeforeAll;
@@ -162,5 +159,53 @@ public class VaultSecretServiceTest {
         assertEquals(version, versionSecrets.getVersion());
         assertEquals(TOKEN_VALUE, versionSecrets.getSecretes().get(TOKEN).getValue());
         assertEquals(TOKEN_EXP_DATE_VALUE, versionSecrets.getSecretes().get(TOKEN_EXP_DATE).getValue());
+    }
+
+    @Test
+    void writeMultipleWithCasError() {
+        SecretObj secretObj = new SecretObj(
+                TEST_TOKEN_PATH,
+                Map.of(
+                        TOKEN, TOKEN_VALUE,
+                        TOKEN_EXP_DATE, TOKEN_EXP_DATE_VALUE
+                )
+        );
+        Integer version = vaultService.writeVersionSecret(SERVICE_NAME, secretObj);
+        SecretObj updatedSecretObj = new SecretObj(
+                TEST_TOKEN_PATH,
+                Map.of(
+                        TOKEN, TOKEN_VALUE + "refresh",
+                        TOKEN_EXP_DATE, TOKEN_EXP_DATE_VALUE
+                )
+        );
+        int wrongVersion = version + 1;
+
+        assertThrows(SecretAlreadyModifyException.class,
+                () -> vaultService.writeWithCas(SERVICE_NAME, updatedSecretObj, wrongVersion));
+    }
+
+    @Test
+    void writeMultipleWithCasSuccess() {
+        SecretObj secretObj = new SecretObj(
+                TEST_TOKEN_PATH,
+                Map.of(
+                        TOKEN, TOKEN_VALUE,
+                        TOKEN_EXP_DATE, TOKEN_EXP_DATE_VALUE
+                )
+        );
+        Integer version = vaultService.writeVersionSecret(SERVICE_NAME, secretObj);
+        SecretObj updatedSecretObj = new SecretObj(
+                TEST_TOKEN_PATH,
+                Map.of(
+                        TOKEN, TOKEN_VALUE + "refresh",
+                        TOKEN_EXP_DATE, TOKEN_EXP_DATE_VALUE
+                )
+        );
+
+        Integer newVersion = vaultService.writeWithCas(SERVICE_NAME, updatedSecretObj, version);
+
+        assertNotNull(newVersion);
+        assertEquals(version + 1, newVersion);
+
     }
 }
