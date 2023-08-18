@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>1.2.13</version>
+    <version>1.2.14</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
@@ -169,7 +169,7 @@
         <dependency>
             <groupId>org.springframework.vault</groupId>
             <artifactId>spring-vault-core</artifactId>
-            <version>2.3.2</version>
+            <version>2.3.3</version>
             <scope>provided</scope>
         </dependency>
 
