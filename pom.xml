@@ -7,12 +7,12 @@
     <parent>
         <groupId>dev.vality</groupId>
         <artifactId>library-parent-pom</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
         <relativePath/>
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>1.2.13</version>
+    <version>1.2.14</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
@@ -45,8 +45,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring.version>5.3.20</spring.version>
-        <spring-boot.version>2.7.0</spring-boot.version>
-        <jackson.version>2.13.2</jackson.version>
+        <spring-boot.version>2.7.16</spring-boot.version>
+        <jackson.version>2.15.2</jackson.version>
         <logback.version>1.2.11</logback.version>
     </properties>
 
@@ -54,12 +54,12 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
+            <version>3.13.0</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.15</version>
+            <version>1.16.0</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -90,7 +90,7 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.9.7</version>
+            <version>1.9.20.1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -107,7 +107,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -125,19 +125,19 @@
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>4.0.0</version>
+            <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.activation</groupId>
             <artifactId>jakarta.activation-api</artifactId>
-            <version>2.1.0</version>
+            <version>2.1.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
-            <version>4.0.0</version>
+            <version>4.0.3</version>
             <scope>provided</scope>
         </dependency>
 
@@ -177,25 +177,25 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>damsel</artifactId>
-            <version>1.563-d384c12</version>
+            <version>1.606-f718741</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>cds-proto</artifactId>
-            <version>1.66-01353ce</version>
+            <version>1.70-5227377</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.vality.woody</groupId>
             <artifactId>woody-thrift</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.5</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>bender-proto</artifactId>
-            <version>1.20-be9cdeb</version>
+            <version>1.25-71c5687</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -209,19 +209,19 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.2</version>
+            <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
-            <version>5.8.2</version>
+            <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>vault</artifactId>
-            <version>1.17.5</version>
+            <version>1.19.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -233,7 +233,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M6</version>
+                <version>3.1.2</version>
             </plugin>
         </plugins>
     </build>
