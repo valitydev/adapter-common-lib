@@ -49,7 +49,7 @@ public class LoggingInterceptor implements ClientHttpRequestInterceptor {
     private void logResponse(int requestNumber, ClientHttpResponse response) throws IOException {
         if (log.isDebugEnabled()) {
             String prefix = requestNumber + " < ";
-            log.debug("{} Response: {} {} {}", prefix, response.getStatusCode(), response.getStatusCode().name(),
+            log.debug("{} Response: {} {} {}", prefix, response.getStatusCode(), response.getStatusCode().value(),
                     response.getStatusText());
             log.debug("{} Headers: {}", prefix, response.getHeaders());
             String body = StreamUtils.copyToString(response.getBody(), StandardCharsets.UTF_8);
@@ -74,12 +74,7 @@ public class LoggingInterceptor implements ClientHttpRequestInterceptor {
 
         @Override
         public HttpStatus getStatusCode() throws IOException {
-            return response.getStatusCode();
-        }
-
-        @Override
-        public int getRawStatusCode() throws IOException {
-            return response.getRawStatusCode();
+            return HttpStatus.resolve(response.getStatusCode().value());
         }
 
         @Override
