@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
@@ -205,7 +205,7 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>bender-proto</artifactId>
-            <version>1.20-be9cdeb</version>
+            <version>1.25-71c5687</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
