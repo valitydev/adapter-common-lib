@@ -115,30 +115,6 @@ public class ProxyProviderPackageExtractors {
         return context.getPaymentInfo().getPayment().getTrx();
     }
 
-    @Deprecated
-    public static LegacyBankCardPaymentSystem extractBankCardPaymentSystem(PaymentResource paymentResource) {
-        if (paymentResource.isSetDisposablePaymentResource()) {
-            return extractBankCardPaymentSystem(paymentResource.getDisposablePaymentResource());
-        }
-        return extractBankCardPaymentSystem(paymentResource.getRecurrentPaymentResource());
-    }
-
-    @Deprecated
-    public static LegacyBankCardPaymentSystem extractBankCardPaymentSystem(PaymentContext context) {
-        return extractBankCardPaymentSystem(extractPaymentResource(context));
-    }
-
-    @Deprecated
-    public static LegacyBankCardPaymentSystem extractBankCardPaymentSystem(RecurrentPaymentResource paymentResource) {
-        return paymentResource.getPaymentTool().getBankCard().getPaymentSystemDeprecated();
-    }
-
-    @Deprecated
-    public static LegacyBankCardPaymentSystem extractBankCardPaymentSystem(DisposablePaymentResource paymentResource) {
-        return paymentResource.getPaymentTool().getBankCard().getPaymentSystemDeprecated();
-    }
-
-
     public static String extractTargetInvoicePaymentStatus(PaymentContext paymentContext) {
         return extractTargetInvoicePaymentStatus(paymentContext.getSession().getTarget());
     }
@@ -165,26 +141,4 @@ public class ProxyProviderPackageExtractors {
         }
         throw new RuntimeException("Unknown Payment Resource");
     }
-
-    @Deprecated
-    public static LegacyBankCardTokenProvider extractBankCardTokenProvider(PaymentContext context) {
-        PaymentResource paymentResource = context.getPaymentInfo().getPayment().getPaymentResource();
-        if (paymentResource.isSetDisposablePaymentResource()) {
-            PaymentTool paymentTool = paymentResource.getDisposablePaymentResource().getPaymentTool();
-            if (paymentTool.isSetBankCard() && paymentTool.getBankCard().isSetTokenProviderDeprecated()) {
-                return paymentTool.getBankCard().getTokenProviderDeprecated();
-            }
-        }
-        return null;
-    }
-
-    @Deprecated
-    public static LegacyBankCardTokenProvider extractBankCardTokenProvider(RecurrentTokenContext context) {
-        PaymentTool paymentTool = context.getTokenInfo().getPaymentTool().getPaymentResource().getPaymentTool();
-        if (paymentTool.isSetBankCard() && paymentTool.getBankCard().isSetTokenProviderDeprecated()) {
-            return paymentTool.getBankCard().getTokenProviderDeprecated();
-        }
-        return null;
-    }
-
 }
