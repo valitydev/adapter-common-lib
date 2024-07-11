@@ -43,30 +43,6 @@ public class DomainPackageCreators {
         return new Cash(amount, currency);
     }
 
-    @Deprecated
-    public static BankCard createBankCardWithExpDate(String bin,
-                                                     String token,
-                                                     LegacyBankCardPaymentSystem bankCardPaymentSystem,
-                                                     String month,
-                                                     String year,
-                                                     String cardholderName) {
-        return createBankCard(bin, token, bankCardPaymentSystem, createBankCardExpDate(month, year), cardholderName);
-    }
-
-    @Deprecated
-    public static BankCard createBankCard(String bin,
-                                          String token,
-                                          LegacyBankCardPaymentSystem bankCardPaymentSystem,
-                                          BankCardExpDate bankCardExpDate,
-                                          String cardholderName) {
-        return new BankCard()
-                .setBin(bin)
-                .setToken(token)
-                .setPaymentSystemDeprecated(bankCardPaymentSystem)
-                .setExpDate(bankCardExpDate)
-                .setCardholderName(cardholderName);
-    }
-
     public static BankCard createBankCard(String month, String year, String cardholderName) {
         return new BankCard().setExpDate(createBankCardExpDate(month, year)).setCardholderName(cardholderName);
     }

@@ -1,7 +1,6 @@
 package dev.vality.adapter.common.mapper;
 
 import dev.vality.adapter.common.mapper.model.Error;
-import dev.vality.woody.api.flow.error.WRuntimeException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -21,8 +20,8 @@ public class ErrorMappingTest {
         error1.setCodeRegex("00002");
         error1.setDescriptionRegex("Invalid Merchant Name");
         var errorMapping = new ErrorMapping("'%s' - '%s'", List.of(error, error1));
-        assertThrows(WRuntimeException.class, () -> errorMapping.mapFailure("unknown"));
-        assertThrows(WRuntimeException.class, () -> errorMapping.mapFailure("00001"));
+        assertThrows(RuntimeException.class, () -> errorMapping.mapFailure("unknown"));
+        assertThrows(RuntimeException.class, () -> errorMapping.mapFailure("00001"));
 
         var error2 = new Error();
         error2.setMapping("authorization_failed:insufficient_funds");
@@ -40,7 +39,7 @@ public class ErrorMappingTest {
         error.setDescriptionRegex("desc");
         error.setMapping("authorization_failed:unknown");
         var errorMapping = new ErrorMapping("'%s' - '%s'", List.of(error));
-        assertThrows(WRuntimeException.class, () -> errorMapping.mapFailure("01"));
+        assertThrows(RuntimeException.class, () -> errorMapping.mapFailure("01"));
 
         error.setDescriptionRegex(null);
         assertNotNull(errorMapping.mapFailure("01"));
