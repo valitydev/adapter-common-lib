@@ -9,8 +9,7 @@ import dev.vality.adapter.common.mapper.model.Error;
 import dev.vality.adapter.common.mapper.model.MappingExceptions;
 import dev.vality.damsel.domain.Failure;
 import dev.vality.geck.serializer.kit.tbase.TErrorUtil;
-import dev.vality.woody.api.flow.error.WUnavailableResultException;
-import dev.vality.woody.api.flow.error.WUndefinedResultException;
+import dev.vality.woody.api.flow.error.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -79,8 +78,7 @@ public class ErrorMapping {
 
     private Error findError(String code, String description, String state) {
         return findErrorInConfig(code, description, state)
-                .orElseThrow(() -> new ErrorMappingException(
-                        String.format("Error not found. Code %s, description %s, state %s", code, description, state)));
+                .orElseThrow(() -> getUnexpectedError(code, description, state));
     }
 
     private Optional<Error> findErrorInConfig(String code, String description, String state) {
@@ -130,9 +128,16 @@ public class ErrorMapping {
             throw new WUnavailableResultException(
                     String.format("Unavailable result %s, code = %s, description = %s", error, code, description));
         } else if (MappingExceptions.RESULT_UNEXPECTED.getMappingException().equals(error.getMapping())) {
-            throw new RuntimeException(
-                    String.format("Unexpected error %s, code = %s, description = %s", error, code, description)
-            );
+            throw getUnexpectedError(code, description, null);
         }
+    }
+
+    private WRuntimeException getUnexpectedError(String code, String description, String state) {
+        var errorMessage = String.format("Unexpected result, code = %s, description = %s, state = %s",
+                code, description, state);
+        var errorDefinition = new WErrorDefinition(WErrorSource.INTERNAL);
+        errorDefinition.setErrorType(WErrorType.UNEXPECTED_ERROR);
+        errorDefinition.setErrorReason("Unmapped error");
+        return new WRuntimeException(errorMessage, errorDefinition);
     }
 }
