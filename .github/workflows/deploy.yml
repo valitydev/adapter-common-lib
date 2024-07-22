@@ -3,8 +3,7 @@ name: Maven Deploy Artifact
 on:
   push:
     branches:
-      - 'master'
-      - 'main'
+      - '*'
 
 jobs:
   deploy:

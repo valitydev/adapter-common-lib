@@ -138,7 +138,7 @@ public class ErrorMapping {
 
         var errorDefinition = new WErrorDefinition(WErrorSource.INTERNAL);
         errorDefinition.setErrorType(WErrorType.UNEXPECTED_ERROR);
-        errorDefinition.setErrorReason(errorMessage);
+        errorDefinition.setErrorReason("Unmapped error");
         return new WRuntimeException(errorMessage, errorDefinition);
     }
 }
