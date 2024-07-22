@@ -2,9 +2,9 @@ package dev.vality.adapter.common.component;
 
 import dev.vality.woody.api.trace.ContextUtils;
 import dev.vality.woody.api.trace.context.TraceContext;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.springframework.boot.actuate.metrics.web.client.ObservationRestTemplateCustomizer;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.springframework.boot.actuate.metrics.web.client.MetricsRestTemplateCustomizer;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -15,22 +15,18 @@ import java.util.List;
 
 public class RestTemplateComponent {
 
-    public RestTemplate getSimpleRestTemplate(ObservationRestTemplateCustomizer observationRestTemplateCustomizer,
+    public RestTemplate getSimpleRestTemplate(MetricsRestTemplateCustomizer metricsRestTemplateCustomizer,
                                               int networkTimeout) {
         HttpComponentsClientHttpRequestFactory requestFactory = getRequestFactory(getSimpleHttpClient());
-        RestTemplateBuilder restTemplateBuilder =
-                getRestTemplateBuilder(requestFactory, observationRestTemplateCustomizer);
+        RestTemplateBuilder restTemplateBuilder = getRestTemplateBuilder(requestFactory, metricsRestTemplateCustomizer);
         return getRestTemplate(restTemplateBuilder, networkTimeout);
     }
 
-    public RestTemplate getRestTemplateWithConverters(
-            ObservationRestTemplateCustomizer observationRestTemplateCustomizer,
-            List<HttpMessageConverter<?>> messageConverterList,
-            int networkTimeout
-    ) {
+    public RestTemplate getRestTemplateWithConverters(MetricsRestTemplateCustomizer metricsRestTemplateCustomizer,
+                                                      List<HttpMessageConverter<?>> messageConverterList,
+                                                      int networkTimeout) {
         HttpComponentsClientHttpRequestFactory requestFactory = getRequestFactory(getSimpleHttpClient());
-        RestTemplateBuilder restTemplateBuilder =
-                getRestTemplateBuilder(requestFactory, observationRestTemplateCustomizer);
+        RestTemplateBuilder restTemplateBuilder = getRestTemplateBuilder(requestFactory, metricsRestTemplateCustomizer);
         RestTemplate restTemplate = getRestTemplate(restTemplateBuilder, networkTimeout);
         restTemplate.setMessageConverters(messageConverterList);
         return restTemplate;
@@ -45,13 +41,11 @@ public class RestTemplateComponent {
                 .build();
     }
 
-    public RestTemplateBuilder getRestTemplateBuilder(
-            HttpComponentsClientHttpRequestFactory requestFactory,
-            ObservationRestTemplateCustomizer observationRestTemplateCustomizer
-    ) {
+    public RestTemplateBuilder getRestTemplateBuilder(HttpComponentsClientHttpRequestFactory requestFactory,
+                                                      MetricsRestTemplateCustomizer metricsRestTemplateCustomizer) {
         return new RestTemplateBuilder()
                 .requestFactory(() -> requestFactory)
-                .additionalCustomizers(observationRestTemplateCustomizer);
+                .additionalCustomizers(metricsRestTemplateCustomizer);
     }
 
     public HttpComponentsClientHttpRequestFactory getRequestFactory(CloseableHttpClient httpClient) {
@@ -65,4 +59,5 @@ public class RestTemplateComponent {
                 .disableAutomaticRetries()
                 .build();
     }
+
 }
