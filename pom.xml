@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.0</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
@@ -107,7 +107,19 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.32</version>
+            <version>1.18.24</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -175,37 +187,31 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>damsel</artifactId>
-            <version>1.641-6051aa9</version>
+            <version>1.563-d384c12</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>cds-proto</artifactId>
-            <version>1.71-b3db02c</version>
+            <version>1.66-01353ce</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.vality.woody</groupId>
             <artifactId>woody-thrift</artifactId>
-            <version>2.0.1</version>
+            <version>1.0.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>bender-proto</artifactId>
-            <version>1.27-753b935</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.vality</groupId>
-            <artifactId>msgpack-proto</artifactId>
-            <version>1.17-7481bb4</version>
+            <version>1.20-be9cdeb</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.vality.geck</groupId>
             <artifactId>serializer</artifactId>
-            <version>1.0.1</version>
+            <version>0.0.1</version>
             <scope>provided</scope>
         </dependency>
 

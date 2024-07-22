@@ -381,6 +381,13 @@ public class ProxyProviderPackageCreators {
         return BrowserHTTPRequest.get_request(new BrowserGetRequest(url));
     }
 
+    @Deprecated
+    public static BankCard createBankCardWithToken(BankCard bankCard,
+                                                   LegacyBankCardTokenProvider bankCardTokenProvider) {
+        bankCard.setTokenProviderDeprecated(bankCardTokenProvider);
+        return bankCard;
+    }
+
     public static TransactionInfo extractTransactionInfo(PaymentContext context) {
         return context.getPaymentInfo().getPayment().getTrx();
     }
