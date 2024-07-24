@@ -13,6 +13,9 @@ import dev.vality.woody.api.flow.error.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -20,6 +23,8 @@ import java.util.Optional;
 public class ErrorMapping {
 
     private static final String DEFAULT_PATTERN_REASON = "'%s' - '%s'";
+    private static final String DEFAULT_BASE64_PREFIX = "base64:";
+    private static final CharsetEncoder ASCII_ENCODER = StandardCharsets.US_ASCII.newEncoder();
 
     /**
      * Pattern for reason failure
@@ -133,12 +138,30 @@ public class ErrorMapping {
     }
 
     private WRuntimeException getUnexpectedError(String code, String description, String state) {
-        String errorMessage = String.format("Unexpected result, code = %s, description = %s, state = %s",
+        var errorMessage = String.format("Unexpected result, code = %s, description = %s, state = %s",
                 code, description, state);
-
         var errorDefinition = new WErrorDefinition(WErrorSource.INTERNAL);
         errorDefinition.setErrorType(WErrorType.UNEXPECTED_ERROR);
-        errorDefinition.setErrorReason(String.format("code = %s, description = %s", code, description));
+        errorDefinition.setErrorReason(String.format("code = %s, description = %s",
+                makeCompatibleWithHttpHeader(code),
+                makeCompatibleWithHttpHeader(description)));
         return new WRuntimeException(errorMessage, errorDefinition);
+    }
+
+    private String makeCompatibleWithHttpHeader(String text) {
+        if (text == null || !containsNonAsciiSymbols(text)) {
+            return text;
+        }
+        return DEFAULT_BASE64_PREFIX +
+                Base64.getEncoder().withoutPadding().encodeToString(text.getBytes(StandardCharsets.UTF_8));
+    }
+
+    private boolean containsNonAsciiSymbols(String text) {
+        for (char c : text.toCharArray()) {
+            if (!ASCII_ENCODER.canEncode(c)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
