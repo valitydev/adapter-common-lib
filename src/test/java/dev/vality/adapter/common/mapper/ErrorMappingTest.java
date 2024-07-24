@@ -34,6 +34,13 @@ public class ErrorMappingTest {
     }
 
     @Test
+    public void nonAsciiTest() {
+        var errorMappingFull = new ErrorMapping("'%s' - '%s'", List.of());
+        var exception = assertThrows(WRuntimeException.class, () -> errorMappingFull.mapFailure("ы"));
+        assertEquals("code = base64:0Ys, description = null", exception.getErrorDefinition().getErrorReason());
+    }
+
+    @Test
     public void testNullDesc() {
         Error error = new Error();
         error.setCodeRegex("01");
