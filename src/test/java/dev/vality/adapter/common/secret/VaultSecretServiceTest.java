@@ -124,6 +124,45 @@ public class VaultSecretServiceTest {
     }
 
     @Test
+    void writeMultipleSecretAndReadCase1() {
+        SecretObj secretObj1 = new SecretObj(TEST_TOKEN_PATH, Map.of("test1", "value1"));
+        vaultService.writeSecret(SERVICE_NAME, secretObj1);
+
+        SecretObj secretObj2 = new SecretObj(TEST_TOKEN_PATH, Map.of(
+                "test2", "value2",
+                "test1", "value1"
+        ));
+        vaultService.writeSecret(SERVICE_NAME, secretObj2);
+
+        var secrets = vaultService.getVersionSecrets(SERVICE_NAME, TEST_TOKEN_PATH);
+
+        assertNotNull(secrets);
+        assertEquals("value2", secrets.getSecretes().get("test2").getValue());
+        assertEquals("value1", secrets.getSecretes().get("test1").getValue());
+
+        assertEquals("value2", vaultService.getSecret(SERVICE_NAME, new SecretRef(TEST_TOKEN_PATH, "test2")).getValue());
+        assertEquals("value1", vaultService.getSecret(SERVICE_NAME, new SecretRef(TEST_TOKEN_PATH, "test1")).getValue());
+    }
+
+    @Test
+    void writeMultipleSecretAndReadCase2() {
+        SecretObj secretObj1 = new SecretObj(TEST_TOKEN_PATH, Map.of("test1", "value1"));
+        vaultService.writeSecret(SERVICE_NAME, secretObj1);
+
+        SecretObj secretObj2 = new SecretObj(TEST_TOKEN_PATH, Map.of("test2", "value2"));
+        vaultService.writeSecret(SERVICE_NAME, secretObj2);
+
+        var secrets = vaultService.getVersionSecrets(SERVICE_NAME, TEST_TOKEN_PATH);
+
+        assertNotNull(secrets);
+        assertEquals("value2", secrets.getSecretes().get("test2").getValue());
+        assertEquals("value1", secrets.getSecretes().get("test1").getValue());
+
+        assertEquals("value2", vaultService.getSecret(SERVICE_NAME, new SecretRef(TEST_TOKEN_PATH, "test2")).getValue());
+        assertEquals("value1", vaultService.getSecret(SERVICE_NAME, new SecretRef(TEST_TOKEN_PATH, "test1")).getValue());
+    }
+
+    @Test
     void writeMultipleSecret() {
         SecretObj secretObj = new SecretObj(
                 TEST_TOKEN_PATH,
