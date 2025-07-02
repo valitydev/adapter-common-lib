@@ -1,13 +1,13 @@
 package dev.vality.adapter.common.cds;
 
-import com.github.javafaker.Faker;
-import com.github.javafaker.Name;
 import dev.vality.adapter.common.cds.model.CardDataProxyModel;
 import dev.vality.adapter.common.exception.CdsStorageExpDateException;
 import dev.vality.cds.storage.CardData;
 import dev.vality.damsel.domain.BankCard;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import net.datafaker.Faker;
+import net.datafaker.providers.base.Name;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
