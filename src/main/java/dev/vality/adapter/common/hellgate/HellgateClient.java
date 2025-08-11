@@ -25,16 +25,4 @@ public class HellgateClient {
         }
     }
 
-    public ByteBuffer processRecurrentTokenCallback(String tag, ByteBuffer callback) {
-        log.info("processRecurrentTokenCallback start with tag {}", tag);
-        try {
-            ByteBuffer callbackResponse = providerProxyHostSrv.processRecurrentTokenCallback(tag, callback);
-            log.info("processRecurrentTokenCallback finish with tag {}", tag);
-            return callbackResponse;
-        } catch (TException ex) {
-            throw new HellgateException(String.format("Exception in processRecurrentTokenCallback with tag: %s", tag),
-                    ex);
-        }
-    }
-
 }
