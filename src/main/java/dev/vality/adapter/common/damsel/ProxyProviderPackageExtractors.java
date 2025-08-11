@@ -2,8 +2,8 @@ package dev.vality.adapter.common.damsel;
 
 import dev.vality.adapter.common.damsel.model.Error;
 import dev.vality.damsel.domain.*;
-import dev.vality.damsel.proxy_provider.Cash;
 import dev.vality.damsel.proxy_provider.*;
+import dev.vality.damsel.proxy_provider.Cash;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -12,20 +12,12 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProxyProviderPackageExtractors {
 
-    public static DisposablePaymentResource extractDisposablePaymentResource(RecurrentTokenContext context) {
-        return context.getTokenInfo().getPaymentTool().getPaymentResource();
-    }
-
     public static DisposablePaymentResource extractDisposablePaymentResource(PaymentContext context) {
         return context.getPaymentInfo().getPayment().getPaymentResource().getDisposablePaymentResource();
     }
 
     public static PaymentResource extractPaymentResource(PaymentContext context) {
         return context.getPaymentInfo().getPayment().getPaymentResource();
-    }
-
-    public static String extractRecurrentId(RecurrentTokenContext context) {
-        return context.getTokenInfo().getPaymentTool().getId();
     }
 
     public static String extractInvoiceId(PaymentContext context) {
@@ -46,10 +38,6 @@ public class ProxyProviderPackageExtractors {
 
     public static String extractRecurrentToken(PaymentContext context) {
         return context.getPaymentInfo().getPayment().getPaymentResource().getRecurrentPaymentResource().getRecToken();
-    }
-
-    public static BankCard extractBankCard(RecurrentTokenContext context) {
-        return extractBankCard(context.getTokenInfo().getPaymentTool().getPaymentResource());
     }
 
     public static BankCard extractBankCard(PaymentContext context) {
@@ -101,10 +89,6 @@ public class ProxyProviderPackageExtractors {
 
     public static Cash extractCashRefund(PaymentContext context) {
         return context.getPaymentInfo().getRefund().getCash();
-    }
-
-    public static Cash extractCashRecurrentToken(RecurrentTokenContext context) {
-        return context.getTokenInfo().getPaymentTool().getMinimalPaymentCost();
     }
 
     public static Map<String, String> extractTrxExtra(PaymentContext context) {

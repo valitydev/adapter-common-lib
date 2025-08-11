@@ -2,12 +2,11 @@ package dev.vality.adapter.common.damsel;
 
 import dev.vality.damsel.base.Timer;
 import dev.vality.damsel.domain.*;
+import dev.vality.damsel.proxy_provider.*;
 import dev.vality.damsel.proxy_provider.Cash;
 import dev.vality.damsel.proxy_provider.Invoice;
 import dev.vality.damsel.proxy_provider.InvoicePayment;
 import dev.vality.damsel.proxy_provider.InvoicePaymentRefund;
-import dev.vality.damsel.proxy_provider.Shop;
-import dev.vality.damsel.proxy_provider.*;
 import dev.vality.damsel.timeout_behaviour.TimeoutBehaviour;
 import dev.vality.damsel.user_interaction.BrowserGetRequest;
 import dev.vality.damsel.user_interaction.BrowserHTTPRequest;
@@ -17,7 +16,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.nio.ByteBuffer;
-import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
 
@@ -40,87 +38,10 @@ public class ProxyProviderPackageCreators {
         return createInvoiceWithPayment(paymentInfo, INVOICE_PAYMENT_SEPARATOR_POINT);
     }
 
-    // RecurrentTokenIntent
-    public static RecurrentTokenSuccess createRecurrentTokenSuccess(String token) {
-        return new RecurrentTokenSuccess(token);
-    }
-
-    public static RecurrentTokenFinishIntent createRecurrentTokenStatusSuccess(String token) {
-        return new RecurrentTokenFinishIntent(RecurrentTokenFinishStatus.success(createRecurrentTokenSuccess(token)));
-    }
-
-    public static RecurrentTokenFinishIntent createRecurrentTokenStatusFailure(Failure failure) {
-        return new RecurrentTokenFinishIntent(RecurrentTokenFinishStatus.failure(failure));
-    }
-
-    public static RecurrentTokenIntent createRecurrentTokenFinishIntentFailure(Failure failure) {
-        return RecurrentTokenIntent.finish(createRecurrentTokenStatusFailure(failure));
-    }
-
-    public static RecurrentTokenIntent createRecurrentTokenFinishIntentSuccess(String token) {
-        return RecurrentTokenIntent.finish(createRecurrentTokenStatusSuccess(token));
-    }
-
-    public static RecurrentTokenIntent createRecurrentTokenWithSuspendIntent(String tag,
-                                                                             int timer,
-                                                                             UserInteraction userInteraction) {
-        return RecurrentTokenIntent.suspend(createSuspendIntent(tag, timer, userInteraction));
-    }
-
-    public static RecurrentTokenIntent createRecurrentTokenWithSuspendIntent(String tag, int timer) {
-        return createRecurrentTokenWithSuspendIntent(tag, timer, null);
-    }
-
-    // RecurrentTokenInfo
-    public static RecurrentTokenInfo createRecurrentTokenInfo(RecurrentPaymentTool recurrentPaymentTool) {
-        return new RecurrentTokenInfo()
-                .setPaymentTool(recurrentPaymentTool);
-    }
-
     // DisposablePaymentResource
     public static DisposablePaymentResource createDisposablePaymentResource(String sessionId,
                                                                             PaymentTool paymentTool) {
         return new DisposablePaymentResource().setPaymentSessionId(sessionId).setPaymentTool(paymentTool);
-    }
-
-    // RecurrentPaymentTool
-    public static RecurrentPaymentTool createRecurrentPaymentTool(DisposablePaymentResource paymentResource) {
-        return new RecurrentPaymentTool().setPaymentResource(paymentResource);
-    }
-
-    public static RecurrentPaymentTool createRecurrentPaymentTool(DisposablePaymentResource disposablePaymentResource,
-                                                                  Cash cash) {
-        return new RecurrentPaymentTool().setPaymentResource(disposablePaymentResource).setMinimalPaymentCost(cash);
-    }
-
-    public static RecurrentPaymentTool createRecurrentPaymentTool(String id,
-                                                                  DisposablePaymentResource disposablePaymentResource,
-                                                                  Cash cash) {
-        return new RecurrentPaymentTool()
-                .setPaymentResource(disposablePaymentResource)
-                .setMinimalPaymentCost(cash)
-                .setId(id)
-                .setCreatedAt(Instant.now().toString());
-    }
-
-    // RecurrentTokenProxyResult
-    public static RecurrentTokenProxyResult createRecurrentTokenProxyResult(RecurrentTokenIntent intent,
-                                                                            byte[] nextState,
-                                                                            TransactionInfo trx) {
-        return new RecurrentTokenProxyResult(intent).setNextState(nextState).setTrx(trx);
-    }
-
-    public static RecurrentTokenProxyResult createRecurrentTokenProxyResult(RecurrentTokenIntent intent) {
-        return createRecurrentTokenProxyResult(intent, null, null);
-    }
-
-    public static RecurrentTokenProxyResult createRecurrentTokenProxyResult(RecurrentTokenIntent intent,
-                                                                            byte[] nextState) {
-        return createRecurrentTokenProxyResult(intent, nextState, null);
-    }
-
-    public static RecurrentTokenProxyResult createRecurrentTokenProxyResultFailure(Failure failure) {
-        return createRecurrentTokenProxyResult(createRecurrentTokenFinishIntentFailure(failure));
     }
 
     // ProxyResult
@@ -254,25 +175,6 @@ public class ProxyProviderPackageCreators {
         return createCallbackResultFailure(DEFAULT_ERROR_CODE.getBytes(), failure);
     }
 
-    // RecurrentTokenCallbackResult
-    public static RecurrentTokenCallbackResult createRecurrentTokenCallbackResult(
-            byte[] callbackResponse,
-            RecurrentTokenProxyResult proxyResult
-    ) {
-        return new RecurrentTokenCallbackResult().setResponse(callbackResponse).setResult(proxyResult);
-    }
-
-    public static RecurrentTokenCallbackResult createRecurrentTokenCallbackResultFailure(byte[] callbackResponse,
-                                                                                         Failure failure) {
-        return new RecurrentTokenCallbackResult()
-                .setResponse(callbackResponse)
-                .setResult(createRecurrentTokenProxyResult(createRecurrentTokenFinishIntentFailure(failure)));
-    }
-
-    public static RecurrentTokenCallbackResult createRecurrentTokenCallbackResultFailure(Failure failure) {
-        return createRecurrentTokenCallbackResultFailure(DEFAULT_ERROR_CODE.getBytes(), failure);
-    }
-
     // FinishIntent
     public static Intent createFinishIntentSuccess() {
         return Intent.finish(new FinishIntent(createFinishStatusSuccess()));
@@ -385,15 +287,7 @@ public class ProxyProviderPackageCreators {
         return context.getPaymentInfo().getPayment().getTrx();
     }
 
-    public static RecurrentTokenInfo extractTransactionInfo(RecurrentTokenContext context) {
-        return context.getTokenInfo();
-    }
-
     public static byte[] extractSessionState(PaymentContext context) {
-        return context.getSession().getState();
-    }
-
-    public static byte[] extractSessionState(RecurrentTokenContext context) {
         return context.getSession().getState();
     }
 
@@ -405,21 +299,6 @@ public class ProxyProviderPackageCreators {
 
     public static String extractIpAddress(PaymentContext context) {
         return extractIpAddress(extractDisposablePaymentResource(context));
-    }
-
-    public static String extractIpAddress(RecurrentTokenContext context) {
-        return extractIpAddress(extractDisposablePaymentResource(context));
-    }
-
-    public static DisposablePaymentResource extractDisposablePaymentResource(RecurrentTokenContext context) {
-        Optional<RecurrentPaymentTool> paymentTool = Optional.of(context).map(RecurrentTokenContext::getTokenInfo)
-                .map(RecurrentTokenInfo::getPaymentTool);
-
-        if (paymentTool.isPresent() && paymentTool.get().isSetPaymentResource()) {
-            paymentTool.get().getPaymentResource();
-        }
-
-        return null;
     }
 
     public static DisposablePaymentResource extractDisposablePaymentResource(PaymentContext context) {

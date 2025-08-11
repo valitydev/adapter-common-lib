@@ -55,10 +55,6 @@ public class DomainPackageCreators {
         return createBankCardExpDate(Byte.parseByte(month), Short.parseShort(year));
     }
 
-    public static Shop createShop(CategoryRef categoryRef, ShopDetails shopDetails) {
-        return new Shop().setCategory(categoryRef).setDetails(shopDetails);
-    }
-
     public static Invoice createInvoice(String invoiceID, String createdAt, Cash cost) {
         return new Invoice().setId(invoiceID).setCreatedAt(createdAt).setCost(cost);
     }
@@ -114,10 +110,6 @@ public class DomainPackageCreators {
 
     public static ShopLocation createShopLocation(String url) {
         return ShopLocation.url(url);
-    }
-
-    public static ShopDetails createShopDetails(String name, String description) {
-        return new ShopDetails(name).setDescription(description);
     }
 
     public static Category createCategory(String name, String description) {

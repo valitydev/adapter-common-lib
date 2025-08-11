@@ -1,6 +1,8 @@
 package dev.vality.adapter.common.damsel;
 
-import dev.vality.damsel.proxy_provider.*;
+import dev.vality.damsel.proxy_provider.PaymentCallbackResult;
+import dev.vality.damsel.proxy_provider.PaymentContext;
+import dev.vality.damsel.proxy_provider.PaymentProxyResult;
 import dev.vality.woody.api.flow.error.WErrorDefinition;
 import dev.vality.woody.api.flow.error.WErrorType;
 import dev.vality.woody.api.flow.error.WRuntimeException;
@@ -20,24 +22,8 @@ public class ProxyProviderVerification {
         return callbackResult.getResult().getIntent().getFinish().getStatus().isSetSuccess();
     }
 
-    public static boolean isSuccess(RecurrentTokenProxyResult proxyResult) {
-        return proxyResult.getIntent().getFinish().getStatus().isSetSuccess();
-    }
-
-    public static boolean isSuccess(RecurrentTokenCallbackResult callbackResult) {
-        return callbackResult.getResult().getIntent().getFinish().getStatus().isSetSuccess();
-    }
-
     public static boolean isSuspend(PaymentProxyResult proxyResult) {
         return proxyResult.getIntent().isSetSuspend();
-    }
-
-    public static boolean isSuspend(RecurrentTokenProxyResult proxyResult) {
-        return proxyResult.getIntent().isSetSuspend();
-    }
-
-    public static boolean isSuspend(RecurrentTokenCallbackResult callbackResult) {
-        return callbackResult.getResult().getIntent().isSetSuspend();
     }
 
     public static boolean isSleep(PaymentProxyResult proxyResult) {
@@ -46,10 +32,6 @@ public class ProxyProviderVerification {
 
     public static boolean isSleep(PaymentCallbackResult proxyResult) {
         return proxyResult.getResult().getIntent().isSetSleep();
-    }
-
-    public static boolean isSleep(RecurrentTokenProxyResult proxyResult) {
-        return proxyResult.getIntent().isSetSleep();
     }
 
     public static boolean isFailure(PaymentProxyResult proxyResult) {

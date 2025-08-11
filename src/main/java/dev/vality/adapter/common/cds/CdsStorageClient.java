@@ -9,7 +9,6 @@ import dev.vality.damsel.domain.BankCard;
 import dev.vality.damsel.domain.DisposablePaymentResource;
 import dev.vality.damsel.proxy_provider.PaymentContext;
 import dev.vality.damsel.proxy_provider.PaymentResource;
-import dev.vality.damsel.proxy_provider.RecurrentTokenContext;
 import dev.vality.damsel.withdrawals.domain.Destination;
 import dev.vality.damsel.withdrawals.provider_adapter.Withdrawal;
 import lombok.RequiredArgsConstructor;
@@ -61,16 +60,6 @@ public class CdsStorageClient {
         return BankCardExtractor.initCardDataProxyModelWithOptionalExpDate(bankCard, getCardData(bankCard.getToken()));
     }
 
-    public CardDataProxyModel getCardData(RecurrentTokenContext context) {
-        DisposablePaymentResource disposablePaymentResource = extractDisposablePaymentResource(context);
-        if (!disposablePaymentResource.isSetPaymentSessionId()) {
-            throw new CdsStorageException("Session Id must be set, recurrentId " + extractRecurrentId(context));
-        }
-        BankCard bankCard = extractBankCard(context);
-        return BankCardExtractor.initCardDataProxyModel(bankCard,
-                getCardData(extractBankCardToken(disposablePaymentResource)));
-    }
-
     public CardDataProxyModel getCardData(PaymentResource paymentResource) {
         if (!paymentResource.isSetDisposablePaymentResource()
                 && !paymentResource.getDisposablePaymentResource().getPaymentTool().isSetBankCard()) {
@@ -91,14 +80,6 @@ public class CdsStorageClient {
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
             throw new CdsStorageException("Session must be set for session data, invoiceId " +
                     extractInvoiceId(context));
-        }
-        return getSessionDataBySessionId(disposablePaymentResource.getPaymentSessionId());
-    }
-
-    public SessionData getSessionData(RecurrentTokenContext context) {
-        DisposablePaymentResource disposablePaymentResource = extractDisposablePaymentResource(context);
-        if (!disposablePaymentResource.isSetPaymentSessionId()) {
-            throw new CdsStorageException("Session Id must be set, recurrentId " + extractRecurrentId(context));
         }
         return getSessionDataBySessionId(disposablePaymentResource.getPaymentSessionId());
     }
