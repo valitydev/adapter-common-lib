@@ -7,12 +7,12 @@
     <parent>
         <groupId>dev.vality</groupId>
         <artifactId>library-parent-pom</artifactId>
-        <version>3.0.4</version>
+        <version>3.1.0</version>
         <relativePath/>
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
