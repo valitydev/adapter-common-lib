@@ -41,27 +41,17 @@
 
     <properties>
         <dockerfile.registry>${env.REGISTRY}</dockerfile.registry>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring.version>6.1.10</spring.version>
         <spring-boot.version>3.3.1</spring-boot.version>
         <jackson.version>2.17.1</jackson.version>
         <bender-proto.version>1.27-753b935</bender-proto.version>
         <cds-proto.version>1.71-b3db02c</cds-proto.version>
-        <error-mapping-java-v2.version>0.0.1</error-mapping-java-v2.version>
+        <error-mapping-java-v2.version>0.0.2</error-mapping-java-v2.version>
+        <woody.version>2.1.0</woody.version>
+        <damsel.version>1.668-8cab698</damsel.version>
+        <msgpack-proto.version>1.17-7481bb4</msgpack-proto.version>
+        <geck.verion>1.0.2</geck.verion>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>dev.vality</groupId>
-                <artifactId>java-service-dependencies</artifactId>
-                <version>1.0.37</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <!-- dev.vality -->
@@ -73,26 +63,31 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>damsel</artifactId>
+            <version>${damsel.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.vality.woody</groupId>
             <artifactId>woody-api</artifactId>
+            <version>${woody.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.vality.woody</groupId>
             <artifactId>woody-thrift</artifactId>
+            <version>${woody.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>msgpack-proto</artifactId>
+            <version>${msgpack-proto.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>dev.vality.geck</groupId>
             <artifactId>serializer</artifactId>
+            <version>${geck.verion}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
