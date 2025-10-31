@@ -7,12 +7,11 @@
     <parent>
         <groupId>dev.vality</groupId>
         <artifactId>library-parent-pom</artifactId>
-        <version>3.0.4</version>
-        <relativePath/>
+        <version>3.1.0</version>
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
@@ -42,45 +41,103 @@
 
     <properties>
         <dockerfile.registry>${env.REGISTRY}</dockerfile.registry>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring.version>6.1.10</spring.version>
         <spring-boot.version>3.3.1</spring-boot.version>
         <jackson.version>2.17.1</jackson.version>
-        <logback.version>1.2.11</logback.version>
-        <pubStagingRepo>https://ossrh-staging-api.central.sonatype.com</pubStagingRepo>
+        <bender-proto.version>1.27-753b935</bender-proto.version>
+        <cds-proto.version>1.71-b3db02c</cds-proto.version>
+        <error-mapping-java-v2.version>0.0.2</error-mapping-java-v2.version>
+        <woody.version>2.1.0</woody.version>
+        <damsel.version>1.668-8cab698</damsel.version>
+        <msgpack-proto.version>1.17-7481bb4</msgpack-proto.version>
+        <geck.verion>1.0.2</geck.verion>
     </properties>
 
     <dependencies>
+        <!-- dev.vality -->
+        <dependency>
+            <groupId>dev.vality</groupId>
+            <artifactId>error-mapping-java-v2</artifactId>
+            <version>${error-mapping-java-v2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality</groupId>
+            <artifactId>damsel</artifactId>
+            <version>${damsel.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality.woody</groupId>
+            <artifactId>woody-api</artifactId>
+            <version>${woody.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality.woody</groupId>
+            <artifactId>woody-thrift</artifactId>
+            <version>${woody.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality</groupId>
+            <artifactId>msgpack-proto</artifactId>
+            <version>${msgpack-proto.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality.geck</groupId>
+            <artifactId>serializer</artifactId>
+            <version>${geck.verion}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality</groupId>
+            <artifactId>bender-proto</artifactId>
+            <version>${bender-proto.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.vality</groupId>
+            <artifactId>cds-proto</artifactId>
+            <version>${cds-proto.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.15</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.datafaker</groupId>
             <artifactId>datafaker</artifactId>
             <version>2.4.3</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.yaml</groupId>
@@ -92,6 +149,7 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
             <version>1.9.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -124,6 +182,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
             <version>4.0.0</version>
@@ -133,11 +197,7 @@
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5</artifactId>
             <version>5.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>6.1.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Spring -->
@@ -172,54 +232,10 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- dev.vality -->
-        <dependency>
-            <groupId>dev.vality</groupId>
-            <artifactId>damsel</artifactId>
-            <version>1.665-392f561</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.vality</groupId>
-            <artifactId>cds-proto</artifactId>
-            <version>1.71-b3db02c</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.vality.woody</groupId>
-            <artifactId>woody-thrift</artifactId>
-            <version>2.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.vality</groupId>
-            <artifactId>bender-proto</artifactId>
-            <version>1.27-753b935</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.vality</groupId>
-            <artifactId>msgpack-proto</artifactId>
-            <version>1.17-7481bb4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.vality.geck</groupId>
-            <artifactId>serializer</artifactId>
-            <version>1.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- Test -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.10.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
             <version>5.10.3</version>
             <scope>test</scope>
         </dependency>
@@ -230,16 +246,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M6</version>
-            </plugin>
-        </plugins>
-    </build>
 </project>
