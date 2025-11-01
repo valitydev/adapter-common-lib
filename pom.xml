@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
@@ -46,7 +46,7 @@
         <jackson.version>2.17.1</jackson.version>
         <bender-proto.version>1.27-753b935</bender-proto.version>
         <cds-proto.version>1.71-b3db02c</cds-proto.version>
-        <error-mapping-java-v2.version>0.0.2</error-mapping-java-v2.version>
+        <error-mapping-java-v2.version>0.0.3</error-mapping-java-v2.version>
         <woody.version>2.1.0</woody.version>
         <damsel.version>1.668-8cab698</damsel.version>
         <msgpack-proto.version>1.17-7481bb4</msgpack-proto.version>
