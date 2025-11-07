@@ -47,6 +47,7 @@
         <bender-proto.version>1.27-753b935</bender-proto.version>
         <cds-proto.version>1.71-b3db02c</cds-proto.version>
         <error-mapping-java-v2.version>0.0.4</error-mapping-java-v2.version>
+        <vault-client.version>0.0.3</vault-client.version>
         <woody.version>2.1.0</woody.version>
         <damsel.version>1.668-8cab698</damsel.version>
         <msgpack-proto.version>1.17-7481bb4</msgpack-proto.version>
@@ -63,7 +64,7 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>vault-client</artifactId>
-            <version>0.0.1</version>
+            <version>${vault-client.version}</version>
         </dependency>
         <dependency>
             <groupId>dev.vality</groupId>

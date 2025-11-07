@@ -2,7 +2,7 @@ package dev.vality.adapter.common.utils.encryption;
 
 import org.junit.jupiter.api.Test;
 
-import static dev.vality.adapter.common.v2.utils.HmacEncryption.calculateHMacSha256;
+import static dev.vality.secret.utils.HmacEncryption.calculateHMacSha256;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HmacEncryptionTest {
