@@ -5,6 +5,10 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.HmacUtils;
 
+/**
+ * @deprecated Use {@code vault-client}. This API will be removed in the next major release.
+ */
+@Deprecated(forRemoval = true)
 class HmacSigner {
     public String sign(String data, String hexSecret, SecretRef secretRef, HmacAlgorithms hmacAlgorithm)
             throws HexDecodeException {

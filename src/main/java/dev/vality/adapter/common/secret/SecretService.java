@@ -4,6 +4,10 @@ import dev.vality.adapter.common.exception.*;
 
 import java.util.Map;
 
+/**
+ * @deprecated Use {@code vault-client}. This API will be removed in the next major release.
+ */
+@Deprecated(forRemoval = true)
 public interface SecretService {
 
     /**

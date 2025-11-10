@@ -1,5 +1,7 @@
 # Adapter-common-lib
 
+[![Maven Central](https://img.shields.io/maven-central/v/dev.vality/adapter-common-lib.svg)](https://central.sonatype.com/artifact/dev.vality/adapter-common-lib)
+
 Бибилиотека включает в себя
 
 + функционал архивированной https://github.com/valitydev/adapter-client-lib

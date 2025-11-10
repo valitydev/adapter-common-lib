@@ -15,8 +15,10 @@ import java.util.Map;
  * {'secret-password','PASSWORD'},
  * 42
  * }
+ * @deprecated Use {@code vault-client}. This API will be removed in the next major release.
  */
 
+@Deprecated(forRemoval = true)
 @Data
 @ToString
 @AllArgsConstructor

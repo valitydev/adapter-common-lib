@@ -15,8 +15,10 @@ import java.util.Map;
  * 'tinkoff-merchant-882347345',
  * {'secret-password','PASSWORD'}
  * }
+ * @deprecated Use {@code vault-client}. This API will be removed in the next major release.
  */
 
+@Deprecated(forRemoval = true)
 @Data
 @ToString
 @AllArgsConstructor

@@ -14,6 +14,10 @@ import java.util.stream.Collectors;
 
 import static dev.vality.adapter.common.exception.SecretAlreadyModifyException.CAS_ERROR_MESSAGE;
 
+/**
+ * @deprecated Use {@code vault-client}. This API will be removed in the next major release.
+ */
+@Deprecated(forRemoval = true)
 @RequiredArgsConstructor
 public class VaultSecretService implements SecretService {
 

@@ -13,6 +13,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
+/**
+ * @deprecated Use {@code vault-client}. This API will be removed in the next major release.
+ */
+@Deprecated(forRemoval = true)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class HmacEncryption {
 
