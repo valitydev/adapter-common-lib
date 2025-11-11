@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>3.1.1</version>
+    <version>3.1.2</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
@@ -49,7 +49,7 @@
         <error-mapping-java-v2.version>0.0.4</error-mapping-java-v2.version>
         <vault-client.version>0.0.3</vault-client.version>
         <woody.version>2.1.0</woody.version>
-        <damsel.version>1.668-8cab698</damsel.version>
+        <damsel.version>1.676-ebe97fb-epic-1</damsel.version>
         <msgpack-proto.version>1.17-7481bb4</msgpack-proto.version>
         <geck.verion>1.0.2</geck.verion>
     </properties>
