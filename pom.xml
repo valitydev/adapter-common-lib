@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>adapter-common-lib</artifactId>
-    <version>3.1.1</version>
+    <version>3.1.2</version>
     <packaging>jar</packaging>
 
     <name>adapter-common-lib</name>
@@ -241,7 +241,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.10.3</version>
+            <version>6.0.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
