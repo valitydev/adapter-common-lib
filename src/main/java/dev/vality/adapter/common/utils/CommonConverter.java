@@ -1,9 +1,9 @@
 package dev.vality.adapter.common.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -20,7 +20,7 @@ public class CommonConverter {
         return new ObjectMapper().readValue(new String(byteBuffer.array(), StandardCharsets.UTF_8), HashMap.class);
     }
 
-    public static ByteBuffer mapToByteBuffer(Map<String, String> map) throws JsonProcessingException {
+    public static ByteBuffer mapToByteBuffer(Map<String, String> map) throws JacksonException {
         return ByteBuffer.wrap(new ObjectMapper().writeValueAsString(map).getBytes());
     }
 
